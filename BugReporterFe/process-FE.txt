@@ -1,0 +1,6 @@
+Parts of the process in making this frontend:
+
+Routing | Set up routing to handle different pages via different urls (this uses react router).
+Loaders | A modern router add on that can handle data fetched before/whilst loading a new route/page, removing the need 
+for the waterfall structure. Navigation state should be used to display loading screens in case the process takes longer
+on slower devices, but this structure is preffered now.
