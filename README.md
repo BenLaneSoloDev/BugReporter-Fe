@@ -10,4 +10,4 @@ Bug Report Wizard frontend client repository.
 - shadcnUI
 
 # Credits
-- 
+- Google Fonts - Rubik

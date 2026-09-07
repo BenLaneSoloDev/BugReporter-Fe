@@ -85,9 +85,11 @@
 
     --color-cc-red: oklch(0.5575 0.1512 22.42);
 
+    --drop-shadow-subtle: 1px 1px 1px rgba(1, 1, 1, 0.55);
+
     --font-heading: var(--font-sans);
 
-    --font-sans: 'Inter Variable', sans-serif;
+    --font-sans: 'Rubik', sans-serif;
 
     --color-sidebar-ring: var(--sidebar-ring);
 
