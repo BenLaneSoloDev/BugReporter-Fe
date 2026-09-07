@@ -9,7 +9,12 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
+import { useNavigate } from "react-router-dom";
+
 export default function Login() {
+  
+  let navigate = useNavigate();
+
   return (
     <div className="flex justify-center h-dvh items-center mx-5">
       <Card className="w-full max-w-sm">
@@ -17,7 +22,7 @@ export default function Login() {
           <div className="flex flex-row justify-between items-end">
             <CardTitle>Login</CardTitle>
             <CardAction>
-              <Button variant="outline">Sign Up</Button>
+              <Button onClick={() => navigate("/signup")} variant="outline">Sign Up</Button>
             </CardAction>
           </div>
         </CardHeader>
