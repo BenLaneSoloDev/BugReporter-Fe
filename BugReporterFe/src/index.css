@@ -75,6 +75,16 @@
 
 @theme inline {
 
+    --color-cc-green-1: oklch(0.4665 0.0784 148.94);
+
+    --color-cc-green-2: oklch(0.6312 0.1166 134.9);
+
+    --color-cc-green-3: oklch(0.7874 0.1465 123.64);
+
+    --color-cc-neutral: oklch(0.9323 0.0347 88.78);
+
+    --color-cc-red: oklch(0.5575 0.1512 22.42);
+
     --font-heading: var(--font-sans);
 
     --font-sans: 'Inter Variable', sans-serif;
