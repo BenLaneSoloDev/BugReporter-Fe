@@ -15,7 +15,7 @@ interface BugsProps {
 
 export default function Bugs({ bugs = [1, 2, 3] } : BugsProps) {
   return (
-    <div className="border-2 border-cc-green-2 rounded-3xl p-2">
+    <div>
       <div className="flex flex-col gap-3 items-center mb-2">
         { bugs.map(() => (
           <Bug />      

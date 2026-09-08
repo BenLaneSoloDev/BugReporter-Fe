@@ -1,9 +1,9 @@
-import Bugs from "@/components/custom/bugs.tsx";
+import Project from "@/components/custom/project";
 
 export default function Dashboard() {
   return (
     <div className="p-30">
-      <Bugs />
+      <Project />
     </div>
   );
 }
