@@ -8,13 +8,15 @@ import {
 } from "@/components/ui/collapsible"
 import { Badge } from "../ui/badge"
 
+import Status from "./status.tsx"
+
 export default function Bug() {
   return (
     <div className="mx-auto w-full border-cc-green-2 border rounded-2xl">
       <CardContent className="p-2">
         <Collapsible className="rounded-md data-open:bg-muted">
           <CollapsibleTrigger render={<Button variant="ghost" className="w-full uppercase">Bug Name
-            <Badge className="ml-auto capitalize">Low</Badge>
+            <div className="ml-auto"><Status /></div>
             <ChevronDownIcon className="group-data-panel-open/button:rotate-180" /></Button>} />
           <CollapsibleContent className="flex flex-col items-start gap-2 p-2.5 pt-0 text-sm font-light">
             <div className="flex flex-row gap-2">
