@@ -16,54 +16,57 @@ export default function Signup() {
   let navigate = useNavigate();
 
   return (
-    <div className="flex justify-center h-dvh items-center mx-5">
-      <Card className="w-full max-w-sm">
-        <CardHeader>
-          <div className="flex flex-row justify-between items-end">
-            <CardTitle>Create an Account</CardTitle>
-            <CardAction>
-              <Button onClick={() => navigate("/login") } variant="outline">Login</Button>
-            </CardAction>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <form>
-            <div className="flex flex-col gap-3">
-              <div className="grid gap-2">
-                <Input
-                  id="firstName"
-                  type="text"
-                  placeholder="First Name"
-                  required
-                />
-              </div>
-              <div className="grid gap-2">
-                <Input
-                  id="lastName"
-                  type="text"
-                  placeholder="Last Name"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="Email"
-                  required
-                />
-              </div>
-              <div className="grid gap-2">
-                <Input id="password" type="password" placeholder="Password" required />
-              </div>
+    <div className="flex flex-col justify-center h-dvh items-center mx-5">
+      <a onClick={() => navigate("/")} className="uppercase font-bold border-b-2 mb-4 cursor-pointer hover:text-cc-green-3 transition-colors duration-200">Bug Reporter</a>
+      <div>
+        <Card className="w-full min-w-md">
+          <CardHeader>
+            <div className="flex flex-row justify-between items-end">
+              <CardTitle>Create an Account</CardTitle>
+              <CardAction>
+                <Button onClick={() => navigate("/login") } variant="outline">Login</Button>
+              </CardAction>
             </div>
-          </form>
-        </CardContent>
-        <CardFooter className="flex-col gap-2">
-          <Button type="submit" className="w-full">
-            Sign Up
-          </Button> 
-        </CardFooter>
-      </Card>
+          </CardHeader>
+          <CardContent>
+            <form>
+              <div className="flex flex-col gap-3">
+                <div className="grid gap-2">
+                  <Input
+                    id="firstName"
+                    type="text"
+                    placeholder="First Name"
+                    required
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Input
+                    id="lastName"
+                    type="text"
+                    placeholder="Last Name"
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Email"
+                    required
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Input id="password" type="password" placeholder="Password" required />
+                </div>
+              </div>
+            </form>
+          </CardContent>
+          <CardFooter className="flex-col gap-2">
+            <Button type="submit" className="w-full">
+              Sign Up
+            </Button> 
+          </CardFooter>
+        </Card>
+      </div>
     </div>
   );
 }
