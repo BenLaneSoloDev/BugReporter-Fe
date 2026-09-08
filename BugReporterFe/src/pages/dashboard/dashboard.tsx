@@ -1,7 +1,12 @@
+import Bug from "@/components/custom/bug";
+
 export default function Dashboard() {
   return (
     <>
-      <h1>Dashboard</h1>
+      <div className="flex flex-col gap-3 items-center p-30">
+        <Bug/>
+        <Bug/>  
+      </div>
     </>
   );
 }
