@@ -1,12 +1,9 @@
-import Bug from "@/components/custom/bug";
+import Bugs from "@/components/custom/bugs.tsx";
 
 export default function Dashboard() {
   return (
-    <>
-      <div className="flex flex-col gap-3 items-center p-30">
-        <Bug/>
-        <Bug/>  
-      </div>
-    </>
+    <div className="p-30">
+      <Bugs />
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 import { ChevronDownIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { CardContent } from "@/components/ui/card"
 import {
   Collapsible,
   CollapsibleContent,
@@ -23,15 +23,15 @@ export default function Bug() {
               <Badge variant="outline">Category</Badge>|<Badge>Environment 1</Badge><Badge>Environment 2</Badge>
             </div>
             <div className="flex flex-col items-start gap-1">
-              <h3 className="font-normal">Expected Behaviour</h3>
+              <h4 className="font-normal">Expected Behaviour</h4>
               <div className="border border-cc-green-2 rounded-xl px-2 py-0.5 mx-2">text</div>
             </div>
             <div className="flex flex-col items-start gap-1">
-              <h3 className="font-normal">Actual Behaviour</h3>
+              <h4 className="font-normal">Actual Behaviour</h4>
               <div className="border border-cc-green-2 rounded-xl px-2 py-0.5 mx-2">text</div>
             </div>
             <div className="flex flex-col items-start gap-1">
-              <h3 className="font-normal">Steps to Reproduce</h3>
+              <h4 className="font-normal">Steps to Reproduce</h4>
               <ol className="list-decimal list-inside border border-cc-green-2 rounded-xl px-2 py-0.5 mx-2">
                 <li>x</li>
                 <li>y</li>
