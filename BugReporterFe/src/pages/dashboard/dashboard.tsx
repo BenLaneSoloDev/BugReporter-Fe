@@ -27,8 +27,8 @@ export default function Dashboard() {
               <h2 className="uppercase text-2xl text-center">Projects</h2>
               <div className="flex flex-col gap-1">
                 {
-                  Array.from({ length: projects }).map(() => (
-                    <Project />
+                  Array.from({ length: projects }).map((value, index) => (
+                    <Project key={`Project${index}`} />
                   ))
                 }
               </div>

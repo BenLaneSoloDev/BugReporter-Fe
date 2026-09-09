@@ -17,8 +17,8 @@ export default function Bugs({ bugs = [1, 2, 3] } : BugsProps) {
   return (
     <div>
       <div className="flex flex-col gap-3 items-center mb-2">
-        { bugs.map(() => (
-          <Bug />      
+        { bugs.map((value, index) => (
+          <Bug key={`Bug${index}`} />      
         ))}
       </div>
       <div>
