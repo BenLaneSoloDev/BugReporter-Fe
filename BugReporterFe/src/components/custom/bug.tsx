@@ -38,7 +38,7 @@ export default function Bug() {
                 <li>z</li>
               </ol>
             </div>
-            <Button size="xs" className={`bg-cc-red hover:bg-cc-red/80 ml-auto`}>Delete</Button>
+            <Button size="xs" className={`bg-cc-red hover:bg-cc-red/80 ml-auto`}>Delete Bug</Button>
           </CollapsibleContent>
         </Collapsible>
       </CardContent>

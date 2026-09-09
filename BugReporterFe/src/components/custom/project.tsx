@@ -20,17 +20,17 @@ export default function Project() {
           <CollapsibleTrigger render={<Button variant="ghost" className="w-full py-6 rounded-3xl uppercase bg-gray-100 aria-expanded:bg-gray-200 hover:bg-gray-200">
             <span>Project Name</span>
             <ChevronDownIcon className="group-data-panel-open/button:rotate-180  ml-auto" /></Button>} /> 
-          <CollapsibleContent className="flex flex-col gap-2 justify-center border-2 border-cc-green-2 rounded-3xl p-2">
+          <CollapsibleContent className="justify-center border-2 border-cc-green-2 rounded-3xl p-2">
             {
               wizard ? (
                 <div className="h-[200px]"></div>
               )
               :
               (
-                <div>
+                <div className="flex flex-col gap-2">
                   <Button className={`aspect-square uppercase self-center my-2`}>Add Bug</Button>
                   <Bugs />
-                  <Button className={`bg-cc-red hover:bg-cc-red/80 self-end`}>Delete</Button>
+                  <Button className={`bg-cc-red hover:bg-cc-red/80 self-end`}>Delete Project</Button>
                 </div>
               )
             }
