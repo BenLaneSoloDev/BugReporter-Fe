@@ -9,13 +9,24 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignupSchema, SignupFormData } from "@/schema/signup.schema";
 import { useSignup } from "@/hooks/useSignup.hook";
 import { useEffect } from "react";
 import { Toaster, toast } from "@/components/ui/toast";
+
+function LoginRedirect() {
+  return (
+    <div className="flex flex-col gap-2">
+      <p>You can now login and start reporting bugs.</p>
+      <Button size={"xs"} variant={"default"} className={"mr-auto"}>
+        <Link to="/login">Login Here</Link>
+      </Button>
+    </div>
+  );
+} 
 
 export default function Signup() {
 
@@ -39,7 +50,11 @@ export default function Signup() {
 
   useEffect(() => {
     if(isSuccess) {
-      navigate("/dashboard");
+      toast.add({
+        type: "success",
+        title: "Account Created",
+        description: <LoginRedirect />
+      })
     }
   }, [isSuccess]);
 
