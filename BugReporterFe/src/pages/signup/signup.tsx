@@ -34,8 +34,7 @@ export default function Signup() {
     });
 
     const result = await response.json();
-    
-    navigate("/dashboard") // Loads into user dashboard
+    if (result) navigate("/dashboard") // Loads into user dashboard
   }
 
   let navigate = useNavigate();
