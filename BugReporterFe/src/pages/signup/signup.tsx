@@ -13,10 +13,16 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignupSchema, SignupFormData } from "@/schema/signup.schema";
+import { useSignup } from "@/hooks/useSignup.hook";
+import { useEffect } from "react";
+import { Toaster, toast } from "@/components/ui/toast";
 
 export default function Signup() {
 
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<SignupFormData>({
+  const { mutate, isError, isSuccess } = useSignup();
+  let navigate = useNavigate();
+
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<SignupFormData>({
     resolver: zodResolver(SignupSchema),
     defaultValues: {
       firstName: "",
@@ -27,17 +33,25 @@ export default function Signup() {
   });
 
   const onSubmit = async (data: SignupFormData) => {
-    const response = await fetch("http://localhost:3001/auth/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-
-    const result = await response.json();
-    if (result) navigate("/dashboard") // Loads into user dashboard
+    mutate(data);
+    reset();
   }
 
-  let navigate = useNavigate();
+  useEffect(() => {
+    if(isSuccess) {
+      navigate("/dashboard");
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if(isError) {
+      toast.add({
+        type: "error",
+        title: "Uh Oh! Your request failed",
+        description: "This user may already exist",
+      })
+    }
+  }, [isError]);
 
   return (
     <div className="flex flex-col justify-center h-dvh items-center mx-5">
@@ -103,6 +117,7 @@ export default function Signup() {
             </CardFooter>
           </form>
         </Card>
+        <Toaster />
       </div>
     </div>
   );

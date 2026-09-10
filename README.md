@@ -8,6 +8,8 @@ Bug Report Wizard frontend client repository.
 - React Router
 - CSS Tailwind
 - shadcnUI
+- Zod
+- Tanstack Query
 
 # Credits
 - Google Fonts - Rubik

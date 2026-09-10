@@ -6,4 +6,5 @@ for the waterfall structure. Navigation state should be used to display loading 
 on slower devices, but this structure is preffered now.
 Forms / Validation | Need to handle data / schema validation on front end, to ensure any subsequent requests are valid
 Interactivity | Connections need to be made so user inputs can properly send and recieve data
-State management | Ensure UI is updated to match the recieved data
+State management | Ensure UI is updated to match the recieved data. Tanstack Query is used for this project to help 
+handle the complexities that come with this stage.
