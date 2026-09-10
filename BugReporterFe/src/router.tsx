@@ -5,8 +5,18 @@ import Signup from "./pages/signup/signup.tsx";
 import Login from "./pages/login/login.tsx";
 import NotFound from './pages/404/notFound.tsx';
 import Dashboard from './pages/dashboard/dashboard.tsx';
+import PrivateRoutes from './privateRoutes/privateRoutes.tsx';
 
 const router = createBrowserRouter([
+  {
+    element: <PrivateRoutes />,
+    children: [
+      {
+        path: '/dashboard',
+        element: <Dashboard />
+      }
+    ],
+  },
   {
     path: '/',
     element: <Home />
@@ -18,10 +28,6 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />
-  },
-  {
-    path: '/dashboard',
-    element: <Dashboard />
   },
   {
     path: '/*',

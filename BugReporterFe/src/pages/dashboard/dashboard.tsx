@@ -8,7 +8,7 @@ export default function Dashboard() {
   
   const navigate = useNavigate();
 
-  const projects: number = 4;
+  const projects: number = 0;
   
   return (
     <div className="p-10">
