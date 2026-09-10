@@ -10,6 +10,7 @@ Bug Report Wizard frontend client repository.
 - shadcnUI
 - Zod
 - Tanstack Query
+- JS-Cookie
 
 # Credits
 - Google Fonts - Rubik

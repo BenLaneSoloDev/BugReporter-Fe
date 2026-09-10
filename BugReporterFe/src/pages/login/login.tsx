@@ -13,10 +13,16 @@ import { isSession, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema, LoginFormData } from "@/schema/login.schema";
+import { useLogin } from "@/hooks/useLogin.hook";
+import { useEffect } from "react";
+import { Toaster, toast } from "@/components/ui/toast";
 
 export default function Login() {
-  
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginFormData>({
+
+  const { mutate, isSuccess, isError } = useLogin();
+  let navigate = useNavigate();
+
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<LoginFormData>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
@@ -25,18 +31,24 @@ export default function Login() {
   });
 
   const onSubmit = async (data: LoginFormData) => {
-    const response = await fetch("http://localhost:3001/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-
-    const result = await response.json();
-    const validInput = result.data.accessToken;
-    if (validInput) navigate("/dashboard") // Loads into user dashboard
+    mutate(data);
   }
 
-  let navigate = useNavigate();
+  useEffect(() => {
+    if(isSuccess) {
+      navigate("/dashboard");
+    }
+  }, [isSuccess]);    
+
+  useEffect(() => {
+    if(isError) {
+      toast.add({
+        type: "error",
+        title: "Uh Oh! Your request failed",
+        description: "Login credentials may be incorrect",
+      })
+    }
+  }, [isError]);
 
   return (
     <div className="flex flex-col h-dvh items-center justify-center mx-5">
@@ -83,6 +95,7 @@ export default function Login() {
             </CardFooter>
           </form>
         </Card>
+        <Toaster />
       </div>
     </div>
   );
