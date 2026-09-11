@@ -1,5 +1,6 @@
 import Project from "@/components/custom/project";
 import ProjectEmpty from "@/components/custom/projectEmpty";
+import ProjectWizard from "@/components/custom/projectWizard";
 import { Button } from "@/components/ui/button";
 
 import { useNavigate } from "react-router-dom";
@@ -14,7 +15,12 @@ export default function Dashboard() {
     <div className="p-10">
       {
         projects === 0 ? (
-          <ProjectEmpty />
+          <div>
+            <ProjectEmpty />
+            <div className="flex flex-row justify-center">
+              <ProjectWizard />
+            </div>
+          </div>
         ) 
         : // Above: No Projects | Below: Show Projects
         (
