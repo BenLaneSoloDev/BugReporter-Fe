@@ -29,7 +29,7 @@ export default function TagInput({ title } : ITagInput) {
   }
 
   return (
-    <div className="border-2 p-1 rounded-xl">
+    <div className="border p-1 rounded-xl">
       <li className="flex flex-row flex-wrap gap-1">
         {
           tags.map((value, index) => (
@@ -44,7 +44,7 @@ export default function TagInput({ title } : ITagInput) {
           onKeyDown={handleEnter}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setInput(e.target.value) }}
           placeholder={input ? input : `Add ${tags.length === 0 ? title : "item"}...` }
-          className="inline-block h-6.5 w-auto text-xs pl-2 min-w-10 field-sizing-content hover:border-b-2 focus:border-b-2 focus:outline-none"/>
+          className="inline-block h-6.5 w-auto text-xs pl-2 min-w-10 field-sizing-content hover:underline hover:underline-offset-2 focus:outline-none"/>
       </li>
     </div>
   )

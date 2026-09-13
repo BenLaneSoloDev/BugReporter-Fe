@@ -19,10 +19,7 @@ export default function ProjectWizard() {
         <form>
           <CardHeader>
             <div className="flex flex-row justify-between items-end">
-              <CardTitle>Create an Account</CardTitle>
-              <CardAction>
-                <Button variant="outline">Login</Button>
-              </CardAction>
+              <CardTitle>Project Details</CardTitle>
             </div>
           </CardHeader>
           <CardContent className="my-5">
@@ -43,17 +40,17 @@ export default function ProjectWizard() {
                 />
               </div>
               <div className="flex flex-row gap-5">
-                <div className="grid gap-2 flex-1">
+                <div className="grid gap-2 flex-1 self-start">
                   <TagInput title="Development Areas" />
                 </div>
-                <div className="grid gap-2 flex-1">
+                <div className="grid gap-2 flex-1 self-start">
                   <TagInput title="Environments" />
                 </div>
               </div>
             </div>            
           </CardContent>
           <CardFooter className="flex-col gap-2">
-            <Button type="submit" className="self-start">
+            <Button type="submit" className="self-">
               Create Project
             </Button> 
           </CardFooter>
