@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import Tag from "./tag";
+import TagInput from "./tagInput";
 
 
 export default function ProjectWizard() {
@@ -42,22 +42,12 @@ export default function ProjectWizard() {
                   className="resize-none"
                 />
               </div>
-              <div className="flex flex-row justify-between">
-                <div className="grid gap-2">
-                  <Input
-                    id="developmentAreas"
-                    type="text"
-                    placeholder="Development Areas"
-                    required
-                  />
+              <div className="flex flex-row gap-5">
+                <div className="grid gap-2 flex-1">
+                  <TagInput title="Development Areas" />
                 </div>
-                <div className="grid gap-2">
-                  <Input 
-                    id="environments" 
-                    type="text" 
-                    placeholder="Environments" 
-                    required
-                  />
+                <div className="grid gap-2 flex-1">
+                  <TagInput title="Environments" />
                 </div>
               </div>
             </div>            
