@@ -11,8 +11,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import TagInput from "./tagInput";
 
+interface IProjectWizard {
+  onSubmit: () => void
+}
 
-export default function ProjectWizard() {
+export default function ProjectWizard({ onSubmit } : IProjectWizard) {
   return (
     <div>
       <Card className="w-full min-w-md max-w-md">
@@ -50,7 +53,7 @@ export default function ProjectWizard() {
             </div>            
           </CardContent>
           <CardFooter className="flex-col gap-2">
-            <Button type="submit" className="self-">
+            <Button type="submit" onClick={onSubmit} className="self-">
               Create Project
             </Button> 
           </CardFooter>

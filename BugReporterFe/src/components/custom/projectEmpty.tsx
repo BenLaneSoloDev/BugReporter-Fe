@@ -9,7 +9,11 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty"
 
-export default function ProjectEmpty() {
+interface IProjectEmpty {
+  onCreate: () => void
+}
+
+export default function ProjectEmpty({ onCreate } : IProjectEmpty) {
   return (
     <Empty>
       <EmptyHeader>
@@ -22,7 +26,7 @@ export default function ProjectEmpty() {
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent className="flex-row justify-center gap-2">
-        <Button>Create Project</Button>
+        <Button onClick={onCreate}>Create Project</Button>
       </EmptyContent>
     </Empty>
   )

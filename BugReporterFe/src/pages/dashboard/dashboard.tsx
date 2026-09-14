@@ -3,42 +3,72 @@ import ProjectEmpty from "@/components/custom/projectEmpty";
 import ProjectWizard from "@/components/custom/projectWizard";
 import { Button } from "@/components/ui/button";
 
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   
-  const navigate = useNavigate();
+  const [projects, setProjects] = useState<string[]>([]);
+  const [inCreation, setInCreation] = useState<boolean>(false);
+  const navigate = useNavigate();''
 
-  const projects: number = 0;
+  function deleteProject(projectIndex: number): void {
+    console.log(projects[projectIndex]);
+    const projectsCache = [...projects];
+    projectsCache.splice(projectIndex, 1);
+    setProjects(projectsCache);
+  }
   
+  function createProject() {
+    setInCreation(false);
+    setProjects([...projects, `p${projects.length}`]);
+  }
+
   return (
-    <div className="p-10">
+    <div className="flex flex-col gap-20 p-10">
+      <div className="flex flex-row">
+        <a onClick={() => navigate("/")} className="uppercase font-bold border-b-2 self-start cursor-pointer hover:text-cc-green-3 transition-colors duration-200">Bug Reporter</a>
+        { projects.length > 0 && 
+          (
+            <Button type="button" onClick={() => setInCreation(true)} className={`ml-auto`}>Create Project</Button>
+          )
+        }
+      </div>
       {
-        projects === 0 ? (
+        projects.length === 0 ? (
           <div>
-            <ProjectEmpty />
-            <div className="flex flex-row justify-center">
-              <ProjectWizard />
-            </div>
+            {
+              !inCreation ? (
+                <ProjectEmpty onCreate={() => setInCreation(true)}/>
+              )
+              :
+              (
+                <div className="flex flex-row justify-center">
+                  <ProjectWizard onSubmit={createProject} />
+                </div>
+              )
+            }
           </div>
         ) 
         : // Above: No Projects | Below: Show Projects
         (
-          <div className="flex flex-col gap-20">
-            <div className="flex flex-row">
-              <a onClick={() => navigate("/")} className="uppercase font-bold border-b-2 self-start cursor-pointer hover:text-cc-green-3 transition-colors duration-200">Bug Reporter</a>
-              <Button className={`ml-auto`}>Create Project</Button>
+          <div className="my-auto">
+            <h2 className="uppercase text-2xl text-center">Projects</h2>
+            <div className="flex flex-col gap-1 mb-4">
+              {
+                projects.map((value, index) => (
+                  <Project onDelete={() => deleteProject(index)} key={`proj${index}`} /> // Make this Project ID from Fetch
+                ))
+              }
             </div>
-            <div className="my-auto">
-              <h2 className="uppercase text-2xl text-center">Projects</h2>
-              <div className="flex flex-col gap-1">
-                {
-                  Array.from({ length: projects }).map((value, index) => (
-                    <Project key={`Project${index}`} />
-                  ))
-                }
-              </div>
-            </div>
+            {
+              inCreation && 
+              (
+                <div className="flex flex-row justify-center">
+                  <ProjectWizard onSubmit={createProject} />
+                </div>
+              )
+            }
           </div>
         )
       }

@@ -9,7 +9,11 @@ import { ChevronDownIcon } from "lucide-react"
 
 import Bugs from "./bugs";
 
-export default function Project() {
+interface IProject {
+  onDelete: () => void
+}
+
+export default function Project({ onDelete } : IProject) {
   
   const wizard = false;
 
@@ -30,7 +34,7 @@ export default function Project() {
                 <div className="flex flex-col gap-2">
                   <Button className={`aspect-square uppercase self-center my-2`}>Add Bug</Button>
                   <Bugs />
-                  <Button className={`bg-cc-red hover:bg-cc-red/80 self-end`}>Delete Project</Button>
+                  <Button onClick={onDelete} className={`bg-cc-red hover:bg-cc-red/80 self-end`}>Delete Project</Button>
                 </div>
               )
             }
