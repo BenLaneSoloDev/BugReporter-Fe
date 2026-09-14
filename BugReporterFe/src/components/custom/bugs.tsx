@@ -9,16 +9,35 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination"
 
+import { useState, useEffect } from "react";
+import { useFetchBugs } from "@/hooks/useFetchBugs.hook.ts";
+import { BugGetData } from "@/schema/bug.schema.ts";
+
 interface BugsProps {
-  bugs?: number[];
+  projectId: string;
 }
 
-export default function Bugs({ bugs = [1, 2, 3] } : BugsProps) {
+export default function Bugs({ projectId } : BugsProps) {
+  
+  const [limit, setLimit] = useState<string>("5");
+  const [page, setPage] = useState<string>("1");
+  const {data, refetch} = useFetchBugs({limit, page, projectId});
+
+  const [bugs, setBugs] = useState<BugGetData[]>([]);
+
+  // TODO: When bug created, refetch GET request
+
+  useEffect(() => {
+    if (data) {
+      setBugs(data.data); 
+    }
+  }, [data])
+
   return (
     <div>
       <div className="flex flex-col gap-3 items-center mb-2">
-        { bugs.map((value, index) => (
-          <Bug key={`Bug${index}`} />      
+        { bugs.length > 0 && bugs.map((value, index) => (
+          <Bug details={value} key={`Bug${index}`} />      
         ))}
       </div>
       <div>

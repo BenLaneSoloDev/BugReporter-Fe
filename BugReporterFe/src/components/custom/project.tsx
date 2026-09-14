@@ -35,7 +35,7 @@ export default function Project({ details, onDelete } : IProject) {
               (
                 <div className="flex flex-col gap-2">
                   <Button className={`aspect-square uppercase self-center my-2`}>Add Bug</Button>
-                  <Bugs />
+                  <Bugs projectId={details["_id"]}/>
                   <Button onClick={onDelete} className={`bg-cc-red hover:bg-cc-red/80 self-end`}>Delete Project</Button>
                 </div>
               )
