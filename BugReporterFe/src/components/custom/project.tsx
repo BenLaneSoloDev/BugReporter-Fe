@@ -8,12 +8,14 @@ import {
 import { ChevronDownIcon } from "lucide-react"
 
 import Bugs from "./bugs";
+import { ProjectImportData } from "@/schema/project.schema";
 
 interface IProject {
+  details: ProjectImportData,
   onDelete: () => void
 }
 
-export default function Project({ onDelete } : IProject) {
+export default function Project({ details, onDelete } : IProject) {
   
   const wizard = false;
 
@@ -22,7 +24,7 @@ export default function Project({ onDelete } : IProject) {
       <CardContent className="p-2">
         <Collapsible className="rounded-3xl drop-shadow-subtle data-open:bg-gray-200">
           <CollapsibleTrigger render={<Button variant="ghost" className="w-full py-6 rounded-3xl uppercase bg-gray-100 aria-expanded:bg-gray-200 hover:bg-gray-200">
-            <span>Project Name</span>
+            <span className="pr-2 data-open:border-r-2 border-cc-red/60">{details.title}</span>
             <ChevronDownIcon className="group-data-panel-open/button:rotate-180  ml-auto" /></Button>} /> 
           <CollapsibleContent className="justify-center border-2 border-cc-green-2 rounded-3xl p-2">
             {

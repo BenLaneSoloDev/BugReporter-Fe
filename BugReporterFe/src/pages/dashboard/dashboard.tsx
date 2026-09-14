@@ -3,26 +3,38 @@ import ProjectEmpty from "@/components/custom/projectEmpty";
 import ProjectWizard from "@/components/custom/projectWizard";
 import { Button } from "@/components/ui/button";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useFetchProjects } from "@/hooks/useFetchProjects.hook";
+import { ProjectFormData, ProjectImportData } from "@/schema/project.schema";
 
 export default function Dashboard() {
   
-  const [projects, setProjects] = useState<string[]>([]);
+  const [limit, setLimit] = useState<string>("5");
+  const [page, setPage] = useState<string>("1");
+  const {data, isError, isSuccess, isPending, error} = useFetchProjects({limit, page});
+
+  const [projects, setProjects] = useState<ProjectImportData[]>([]);
   const [inCreation, setInCreation] = useState<boolean>(false);
-  const navigate = useNavigate();''
+  
+  const navigate = useNavigate();
 
   function deleteProject(projectIndex: number): void {
-    console.log(projects[projectIndex]);
     const projectsCache = [...projects];
     projectsCache.splice(projectIndex, 1);
     setProjects(projectsCache);
   }
   
-  function createProject() {
+  function createProject(newProject: ProjectFormData) {
     setInCreation(false);
-    setProjects([...projects, `p${projects.length}`]);
+    setProjects([...projects, {...newProject, _id: "x"}]);
   }
+
+  useEffect(() => {
+    if (data) {
+      setProjects(data.data); 
+    }
+  }, [data])
 
   return (
     <div className="flex flex-col gap-20 p-10">
@@ -44,7 +56,7 @@ export default function Dashboard() {
               :
               (
                 <div className="flex flex-row justify-center">
-                  <ProjectWizard onSubmit={createProject} />
+                  <ProjectWizard onSubmit={(proj) => createProject(proj)} />
                 </div>
               )
             }
@@ -57,7 +69,7 @@ export default function Dashboard() {
             <div className="flex flex-col gap-1 mb-4">
               {
                 projects.map((value, index) => (
-                  <Project onDelete={() => deleteProject(index)} key={`proj${index}`} /> // Make this Project ID from Fetch
+                  <Project details={value} onDelete={() => deleteProject(index)} key={`proj${index}`} /> // Make this Project ID from Fetch
                 ))
               }
             </div>
@@ -65,7 +77,7 @@ export default function Dashboard() {
               inCreation && 
               (
                 <div className="flex flex-row justify-center">
-                  <ProjectWizard onSubmit={createProject} />
+                  <ProjectWizard onSubmit={(proj) => createProject(proj)} />
                 </div>
               )
             }

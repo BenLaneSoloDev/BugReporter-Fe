@@ -16,3 +16,11 @@ export const ProjectSchema = z.object({
 });
 
 export type ProjectFormData = z.infer<typeof ProjectSchema>;
+
+const ProjectSchemaImport = ProjectSchema.extend({
+  _id: z.string(),
+  createdAt: z.string().optional(),
+  updatedAt: z.string().optional()
+})
+
+export type ProjectImportData = z.infer<typeof ProjectSchemaImport>

@@ -10,9 +10,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import TagInput from "./tagInput";
+import { ProjectFormData } from "@/schema/project.schema";
 
 interface IProjectWizard {
-  onSubmit: () => void
+  onSubmit: (proj: ProjectFormData) => void
 }
 
 export default function ProjectWizard({ onSubmit } : IProjectWizard) {
@@ -53,7 +54,7 @@ export default function ProjectWizard({ onSubmit } : IProjectWizard) {
             </div>            
           </CardContent>
           <CardFooter className="flex-col gap-2">
-            <Button type="submit" onClick={onSubmit} className="self-">
+            <Button type="submit" onClick={() => onSubmit({ title: "x", description: "y", environments: [], developmentAreas: []})} className="self-">
               Create Project
             </Button> 
           </CardFooter>
