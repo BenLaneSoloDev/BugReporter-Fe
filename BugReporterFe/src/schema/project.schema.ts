@@ -17,10 +17,14 @@ export const ProjectSchema = z.object({
 
 export type ProjectFormData = z.infer<typeof ProjectSchema>;
 
-const ProjectSchemaImport = ProjectSchema.extend({
+const ProjectSchemaGet = ProjectSchema.extend({
   _id: z.string(),
   createdAt: z.string().optional(),
   updatedAt: z.string().optional()
 })
 
-export type ProjectImportData = z.infer<typeof ProjectSchemaImport>
+export type ProjectImportData = z.infer<typeof ProjectSchemaGet>
+
+export const ProjectSchemeDelete = z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid MongoDB ObjectId format");
+
+export type MongoId = z.infer<typeof ProjectSchemeDelete>;

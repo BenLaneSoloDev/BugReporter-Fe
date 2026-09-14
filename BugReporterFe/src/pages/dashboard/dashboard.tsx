@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFetchProjects } from "@/hooks/useFetchProjects.hook";
 import { useCreateProject } from "@/hooks/useCreateProject.hook";
+import { useDeleteProject } from "@/hooks/useDeleteProject.hook";
 import { ProjectFormData, ProjectImportData } from "@/schema/project.schema";
 
 export default function Dashboard() {
@@ -17,16 +18,18 @@ export default function Dashboard() {
   const {data, refetch} = useFetchProjects({limit, page});
 
   const createProject = useCreateProject();
+  const deleteProject = useDeleteProject();
 
   const [projects, setProjects] = useState<ProjectImportData[]>([]);
   const [inCreation, setInCreation] = useState<boolean>(false);
   
   const navigate = useNavigate();
 
-  function deleteProject(projectIndex: number): void {
+  const onDelete = async (projectIndex: number) => {
     const projectsCache = [...projects];
     projectsCache.splice(projectIndex, 1);
     setProjects(projectsCache);
+    deleteProject.mutate(projects[projectIndex]._id);
   }
   
   const onCreate = async (project: ProjectFormData) => {
@@ -83,7 +86,7 @@ export default function Dashboard() {
             <div className="flex flex-col gap-1 mb-4">
               {
                 projects.map((value, index) => (
-                  <Project details={value} onDelete={() => deleteProject(index)} key={`proj${index}`} /> // Make this Project ID from Fetch
+                  <Project details={value} onDelete={() => onDelete(index)} key={`${value.title}-${index}`} /> // Make this Project ID from Fetch
                 ))
               }
             </div>
