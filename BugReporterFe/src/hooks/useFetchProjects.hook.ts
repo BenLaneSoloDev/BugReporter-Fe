@@ -46,7 +46,7 @@ export function useFetchProjects(params: IFetchProjectParams) {
 
   useEffect(() => {
     if (query.error) {
-      console.log("Error fetching projects", query.error);
+      console.log("Error fetching projects ->", query.error);
     }
   }, [query.error]);
 

@@ -3,9 +3,11 @@ import { useState } from "react"
 
 interface ITagInput {
   title?: string
+  value: string[],
+  onChange: (tags: string[]) => void
 }
 
-export default function TagInput({ title } : ITagInput) {
+export default function TagInput({ title, value, onChange } : ITagInput) {
   
   const [tags, setTags] = useState<string[]>([]);
   const [input, setInput] = useState<string>("");
@@ -14,10 +16,12 @@ export default function TagInput({ title } : ITagInput) {
     const tagsCache = [...tags];
     tagsCache.splice(tagIndex, 1);
     setTags(tagsCache);
+    onChange?.(tagsCache);
   }
 
   function addTag(tag: string): void {
     setTags([...tags, tag]);
+    onChange?.([...tags, tag]);
   }
 
   const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {

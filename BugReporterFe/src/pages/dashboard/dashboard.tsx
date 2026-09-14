@@ -2,17 +2,21 @@ import Project from "@/components/custom/project";
 import ProjectEmpty from "@/components/custom/projectEmpty";
 import ProjectWizard from "@/components/custom/projectWizard";
 import { Button } from "@/components/ui/button";
+import { Toaster, toast } from "@/components/ui/toast";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFetchProjects } from "@/hooks/useFetchProjects.hook";
+import { useCreateProject } from "@/hooks/useCreateProject.hook";
 import { ProjectFormData, ProjectImportData } from "@/schema/project.schema";
 
 export default function Dashboard() {
   
   const [limit, setLimit] = useState<string>("5");
   const [page, setPage] = useState<string>("1");
-  const {data, isError, isSuccess, isPending, error} = useFetchProjects({limit, page});
+  const {data, refetch} = useFetchProjects({limit, page});
+
+  const createProject = useCreateProject();
 
   const [projects, setProjects] = useState<ProjectImportData[]>([]);
   const [inCreation, setInCreation] = useState<boolean>(false);
@@ -25,10 +29,20 @@ export default function Dashboard() {
     setProjects(projectsCache);
   }
   
-  function createProject(newProject: ProjectFormData) {
+  const onCreate = async (project: ProjectFormData) => {
     setInCreation(false);
-    setProjects([...projects, {...newProject, _id: "x"}]);
+    createProject.mutate(project);
   }
+
+  useEffect(() => {
+    if (createProject.isSuccess) {
+      toast.add({
+        type: "Success",
+        title: "Project Created"
+      })
+      refetch();
+    }
+  }, [createProject.isSuccess])
 
   useEffect(() => {
     if (data) {
@@ -56,7 +70,7 @@ export default function Dashboard() {
               :
               (
                 <div className="flex flex-row justify-center">
-                  <ProjectWizard onSubmit={(proj) => createProject(proj)} />
+                  <ProjectWizard onSubmit={(proj) => onCreate(proj)} />
                 </div>
               )
             }
@@ -77,13 +91,14 @@ export default function Dashboard() {
               inCreation && 
               (
                 <div className="flex flex-row justify-center">
-                  <ProjectWizard onSubmit={(proj) => createProject(proj)} />
+                  <ProjectWizard onSubmit={(proj) => onCreate(proj)} />
                 </div>
               )
             }
           </div>
         )
       }
+      <Toaster />
     </div>
   );
 }
