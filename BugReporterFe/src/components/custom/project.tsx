@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/collapsible"
 import { ChevronDownIcon } from "lucide-react"
 
+import BugWizard from "@/components/custom/bugWizard";
 import Bugs from "./bugs";
 import { ProjectImportData } from "@/schema/project.schema";
 
@@ -35,6 +36,7 @@ export default function Project({ details, onDelete } : IProject) {
               (
                 <div className="flex flex-col gap-2">
                   <Button className={`aspect-square uppercase self-center my-2`}>Add Bug</Button>
+                  <div className="self-center"><BugWizard /></div>
                   <Bugs projectId={details["_id"]}/>
                   <Button onClick={onDelete} className={`bg-cc-red hover:bg-cc-red/80 self-end`}>Delete Project</Button>
                 </div>
