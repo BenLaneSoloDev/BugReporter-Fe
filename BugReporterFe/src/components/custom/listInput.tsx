@@ -1,15 +1,16 @@
 import { Input } from "../ui/input";
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 interface IListInput {
   title?: string
   value?: string[],
-  onChange?: (tags: string[]) => void
+  onChange?: (items: string[]) => void
+  onBlur?: () => void
 }
 
 // ! NEED TO MAKE value AND onChange required when setting up form
 
-export default function ListInput({ title, value, onChange } : IListInput) {
+export default function ListInput({ title, value = [], onChange, onBlur } : IListInput) {
   
   const [items, setItems] = useState<string[]>([]);
   const [input, setInput] = useState<string>("");
@@ -19,11 +20,14 @@ export default function ListInput({ title, value, onChange } : IListInput) {
     itemsCache.splice(itemIndex, 1);
     setItems(itemsCache);
     onChange?.(itemsCache);
+    onBlur?.();
   }
 
   function addItem(item: string): void {
-    setItems([...items, item]);
-    onChange?.([...items, item]);
+    const itemsCache = [...items, item];
+    setItems(itemsCache);
+    onChange?.(itemsCache);
+    onBlur?.();
   }
 
   const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -34,15 +38,21 @@ export default function ListInput({ title, value, onChange } : IListInput) {
     }
   }
 
+  useEffect(() => {
+    setItems(value);
+  }, [value]);
+
   return (
     <div>
       <Input
           id="title"
           value={input}
           type="text"
-          placeholder={title}
+          placeholder={`${title} ${items.length >= 10 ? "(Max 10)" : ""}`}
           onKeyDown={handleEnter}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setInput(e.target.value) }}
+          onBlur={onBlur}
+          disabled={items.length >= 10}
         />
       <ol className={`list-decimal list-inside pl-2`}>
         {

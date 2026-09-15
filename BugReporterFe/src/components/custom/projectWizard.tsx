@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardAction,
   CardContent,
   CardFooter,
   CardHeader,
@@ -10,10 +9,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import TagInput from "./tagInput";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProjectFormData } from "@/schema/project.schema";
-import { Controller, useForm, FieldErrors } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { ProjectSchema } from "@/schema/project.schema";
 
 interface IProjectWizard {
@@ -52,7 +50,6 @@ export default function ProjectWizard({ onSubmit } : IProjectWizard) {
                   id="title"
                   type="text"
                   placeholder="Title"
-                  required
                   {...register("title")}
                 />
                 {errors.title && (<p className="bg-cc-red/20 p-2 rounded-2xl">{errors.title.message}</p>)}

@@ -28,8 +28,8 @@ export default function Bug({ details } : IBug) {
             <div className="flex flex-row gap-2">
               <Badge variant="outline">{details.developmentArea}</Badge>
               |
-              { details.environmentsUsed.map((value) => (
-                <Badge>{value}</Badge>
+              { details.environmentsUsed.map((value, index) => (
+                <Badge key={`badge${index}`}>{value}</Badge>
               ))}
             </div>
             <div className="flex flex-col items-start gap-1">
@@ -43,8 +43,8 @@ export default function Bug({ details } : IBug) {
             <div className="flex flex-col items-start gap-1">
               <h4 className="font-normal">Steps to Reproduce</h4>
               <ol className="list-decimal list-inside border border-cc-green-2 rounded-xl px-2 py-0.5 mx-2">
-                { details.stepsToReproduce.map((value) => (
-                  <li>{value}</li>
+                { details.stepsToReproduce.map((value, index) => (
+                  <li key={`bug${index}`}>{value}</li>
                 ))}                
               </ol>
             </div>

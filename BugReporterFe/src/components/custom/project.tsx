@@ -10,6 +10,9 @@ import { ChevronDownIcon } from "lucide-react"
 import BugWizard from "@/components/custom/bugWizard";
 import Bugs from "./bugs";
 import { ProjectImportData } from "@/schema/project.schema";
+import { BugFormData } from "@/schema/bug.schema";
+import { useCreateBug } from "@/hooks/useCreateBug.hook";
+import { useState } from "react";
 
 interface IProject {
   details: ProjectImportData,
@@ -18,7 +21,13 @@ interface IProject {
 
 export default function Project({ details, onDelete } : IProject) {
   
-  const wizard = false;
+  const [inCreation, setInCreation] = useState<boolean>(false);
+  const createBug = useCreateBug();
+
+  const onCreate = async (bug: BugFormData) => {
+      setInCreation(false);
+      createBug.mutate({...bug, project: details["_id"]});
+    }
 
   return(
     <div>
@@ -28,20 +37,23 @@ export default function Project({ details, onDelete } : IProject) {
             <span className="pr-2 data-open:border-r-2 border-cc-red/60">{details.title}</span>
             <ChevronDownIcon className="group-data-panel-open/button:rotate-180  ml-auto" /></Button>} /> 
           <CollapsibleContent className="justify-center border-2 border-cc-green-2 rounded-3xl p-2">
-            {
-              wizard ? (
-                <div className="h-[200px]"></div>
-              )
-              :
-              (
-                <div className="flex flex-col gap-2">
-                  <Button className={`aspect-square uppercase self-center my-2`}>Add Bug</Button>
-                  <div className="self-center"><BugWizard /></div>
-                  <Bugs projectId={details["_id"]}/>
-                  <Button onClick={onDelete} className={`bg-cc-red hover:bg-cc-red/80 self-end`}>Delete Project</Button>
-                </div>
-              )
-            }
+            <div className="flex flex-col gap-2">
+              {
+                inCreation ? (
+                  <div className="self-center">
+                    <BugWizard project={details} onSubmit={(bug) => onCreate(bug)}/>
+                  </div>
+                )
+                :
+                ( 
+                  <>
+                    <Button onClick={() => setInCreation(true)} className={`aspect-square uppercase self-center my-2`}>Add Bug</Button>
+                    <Bugs projectId={details["_id"]}/>
+                    <Button onClick={onDelete} className={`bg-cc-red hover:bg-cc-red/80 self-end`}>Delete Project</Button>
+                  </>
+                )
+              }
+            </div>
           </CollapsibleContent>
         </Collapsible>
       </CardContent>      
