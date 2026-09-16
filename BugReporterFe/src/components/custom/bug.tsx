@@ -7,6 +7,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
 import { Badge } from "../ui/badge"
+import ConfirmButton from "./confirmButton.tsx"
 
 import Status from "./status.tsx"
 import { BugGetData } from "@/schema/bug.schema.ts"
@@ -49,7 +50,7 @@ export default function Bug({ details, onDelete } : IBug) {
                 ))}                
               </ol>
             </div>
-            <Button size="xs" onClick={onDelete} className={`bg-cc-red hover:bg-cc-red/80 ml-auto`}>Delete Bug</Button>
+            <div className="self-end"><ConfirmButton type="bug" size="xs" onConfirm={onDelete}/></div>
           </CollapsibleContent>
         </Collapsible>
       </CardContent>

@@ -6,6 +6,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
 import { ChevronDownIcon } from "lucide-react"
+import ConfirmButton from "./confirmButton";
 
 import BugWizard from "@/components/custom/bugWizard";
 import Bugs from "./bugs";
@@ -49,7 +50,7 @@ export default function Project({ details, onDelete } : IProject) {
                   <>
                     <Button onClick={() => setInCreation(true)} className={`aspect-square uppercase self-center my-2`}>Add Bug</Button>
                     <Bugs projectId={details["_id"]}/>
-                    <Button onClick={onDelete} className={`bg-cc-red hover:bg-cc-red/80 self-end`}>Delete Project</Button>
+                    <div className="self-end"><ConfirmButton type="project" onConfirm={onDelete}/></div>
                   </>
                 )
               }
