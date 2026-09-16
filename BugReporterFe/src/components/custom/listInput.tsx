@@ -1,5 +1,6 @@
 import { Input } from "../ui/input";
 import { useState, useEffect } from "react"
+import { Button } from "../ui/button";
 
 interface IListInput {
   title?: string
@@ -59,7 +60,7 @@ export default function ListInput({ title, value = [], onChange, onBlur } : ILis
           items.map((value, index) => (
             <li key={`tag ${index}`} className={`flex flex-row gap-1 w-auto h-auto py-1 my-1 ${(items.length > 0 && index !== items.length - 1) && "border-b"}`}>
               <p className="font-normal" key={`step${index}`}>{`${index + 1}.`} {value}</p>
-              <button type="button" onClick={() => {removeItem(index)}} className={"bg-cc-red/75 hover:bg-cc-red transition-colors h-full w-auto aspect-square rounded-full self-start text-xs p-1 ml-auto leading-0"}>X</button>
+              <Button type="button" onClick={() => {removeItem(index)}} size={"xs"} variant="default" className={"aspect-square bg-cc-red hover:bg-cc-red/80 self-start text-xs ml-auto leading-0"}>X</Button>
             </li>
           ))
         }

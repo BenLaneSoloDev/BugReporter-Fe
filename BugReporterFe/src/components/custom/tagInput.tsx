@@ -1,5 +1,6 @@
 import { Badge } from "../ui/badge"
 import { useState } from "react"
+import { Button } from "../ui/button"
 
 interface ITagInput {
   title?: string
@@ -39,7 +40,7 @@ export default function TagInput({ title, value, onChange } : ITagInput) {
           tags.map((value, index) => (
             <Badge key={`tag ${index}`} className="flex flex-row gap-1 w-auto h-auto py-1">
               <p className="px-2">{value}</p>
-              <button type="button" onClick={() => {removeTag(index)}} className={"bg-cc-red/75 hover:bg-cc-red transition-colors h-full w-auto aspect-square rounded-full text-2xs"}>X</button>
+              <Button type="button" onClick={() => {removeTag(index)}} size={"xs"} variant="default" className={"aspect-square w-3 h-auto bg-cc-red hover:bg-cc-red/80"}>X</Button>
             </Badge>
           ))
         }

@@ -42,7 +42,7 @@ export default function ProjectWizard({ onSubmit, onCancel } : IProjectWizard) {
           <CardHeader>
             <div className="flex flex-row justify-between items-end">
               <CardTitle>Project Details</CardTitle>
-              <Button onClick={onCancel} className={"aspect-square"} variant="destructive">X</Button>
+              <Button onClick={onCancel} size={"xs"} className={"aspect-square"} variant="destructive">X</Button>
             </div>
           </CardHeader>
           <CardContent className="my-5">
