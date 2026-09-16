@@ -55,31 +55,37 @@ export default function Bugs({ projectId } : BugsProps) {
       </div>
       { bugs.length > 0 && (
         <div>
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">1</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" isActive>2</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">3</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext href="#" />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+          { (data && (data.pagination.meta.totalPages > 1)) && (
+            <Pagination>
+              <PaginationContent>
+                { data.pagination.meta.currentPage > 1 ? (
+                  <PaginationItem>
+                    <PaginationPrevious onClick={() => setPage((parseInt(page) - 1).toString())} href="#" />
+                  </PaginationItem>
+                )
+                :
+                (
+                  <PaginationItem>
+                    <PaginationLink className="invisible"/>
+                  </PaginationItem>
+                )}
+                <PaginationItem>
+                  <PaginationLink href="#" isActive>{page}</PaginationLink>
+                </PaginationItem>
+                { data.pagination.meta.currentPage < data.pagination.meta.totalPages ? (
+                  <PaginationItem>
+                    <PaginationNext onClick={() => setPage((parseInt(page) + 1).toString())} href="#" />
+                  </PaginationItem>
+                )
+                :
+                (
+                  <PaginationItem>
+                    <PaginationLink className="invisible"/>
+                  </PaginationItem>
+                )}
+              </PaginationContent>
+            </Pagination>
+          )}
         </div>
       )}
     </div>
