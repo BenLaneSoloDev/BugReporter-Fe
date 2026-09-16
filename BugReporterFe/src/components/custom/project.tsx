@@ -41,7 +41,7 @@ export default function Project({ details, onDelete } : IProject) {
               {
                 inCreation ? (
                   <div className="self-center">
-                    <BugWizard project={details} onSubmit={(bug) => onCreate(bug)}/>
+                    <BugWizard project={details} onCancel={() => setInCreation(false)} onSubmit={(bug) => onCreate(bug)}/>
                   </div>
                 )
                 :

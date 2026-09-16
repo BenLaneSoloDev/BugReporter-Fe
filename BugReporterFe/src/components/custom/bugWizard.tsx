@@ -21,15 +21,18 @@ import { BugFormData, BugPageOneSchema, BugPageThreeSchema, BugPageTwoSchema, Bu
 import { Control, Controller, FieldErrors, useForm, UseFormRegister, FormProvider, Form, useFormContext } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProjectImportData } from "@/schema/project.schema";
+import { ca } from "zod/v4/locales";
 
   interface IBugWizard {
     project: ProjectImportData,
     onSubmit: (bug: BugFormData) => void
+    onCancel: () => void
   }
 
-  export default function BugWizard({ project, onSubmit } : IBugWizard) {
+  export default function BugWizard({ project, onSubmit, onCancel } : IBugWizard) {
     
     const [page, setPage] = useState(1);
+    const [unlocks, setUnlocks] = useState<boolean[]>([true, false, false, false]);
 
     const formMethods  = useForm<BugFormData>({
       resolver: zodResolver(BugSchema),
@@ -55,10 +58,12 @@ import { ProjectImportData } from "@/schema/project.schema";
       ]
 
       const isValid = await trigger(pageFields[page - 1])
-      console.log(errors);
 
       if (isValid) {
         setPage(page + 1);
+        let unlocksCache = unlocks;
+        unlocksCache[page] = true;
+        setUnlocks(unlocksCache);
       }
     }
 
@@ -69,16 +74,17 @@ import { ProjectImportData } from "@/schema/project.schema";
 
     return (
       <div>
-        <Card className="w-full min-w-md max-w-md">
+        <Card className="w-full min-w-md max-w-md"> 
           <FormProvider {...formMethods} >
             <form onSubmit={handleSubmit(submitFull)}>
-              <CardHeader>
-                <div className="flex flex-row justify-evenly items-end font-semibold">
-                  <h3 className={`${page === 1 && "text-cc-red"}`}>1</h3>
-                  <h3 className={`${page === 2 && "text-cc-red"}`}>2</h3>
-                  <h3 className={`${page === 3 && "text-cc-red"}`}>3</h3>
-                  <h3 className={`${page === 4 && "text-cc-red"}`}>4</h3>
+              <CardHeader className="flex flex-row items-center">
+                <div className="flex flex-row justify-evenly items-end font-semibold w-full">
+                  {unlocks[0] && <h3 onClick={() => setPage(1)} className={`${page === 1 ? "text-cc-red" : "cursor-pointer"}`}>1</h3>}
+                  {unlocks[1] && <h3 onClick={() => setPage(2)} className={`${page === 2 ? "text-cc-red" : "cursor-pointer"}`}>2</h3>}
+                  {unlocks[2] && <h3 onClick={() => setPage(3)} className={`${page === 3 ? "text-cc-red" : "cursor-pointer"}`}>3</h3>}
+                  {unlocks[3] && <h3 onClick={() => setPage(4)} className={`${page === 4 ? "text-cc-red" : "cursor-pointer"}`}>4</h3>}
                 </div>
+                <Button onClick={onCancel} className={"aspect-square self-end"} size="xs" variant="destructive">X</Button> 
               </CardHeader>
               <CardContent className="my-4">
                 { page === 1 && <PageOne register={register} errors={errors} control={control} project={project} />}

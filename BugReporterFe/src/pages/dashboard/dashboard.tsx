@@ -73,7 +73,7 @@ export default function Dashboard() {
               :
               (
                 <div className="flex flex-row justify-center">
-                  <ProjectWizard onSubmit={(proj) => onCreate(proj)} />
+                  <ProjectWizard onCancel={() => setInCreation(false)} onSubmit={(proj) => onCreate(proj)} />
                 </div>
               )
             }
@@ -94,7 +94,7 @@ export default function Dashboard() {
               inCreation && 
               (
                 <div className="flex flex-row justify-center">
-                  <ProjectWizard onSubmit={(proj) => onCreate(proj)} />
+                  <ProjectWizard onCancel={() => setInCreation(false)} onSubmit={(proj) => onCreate(proj)} />
                 </div>
               )
             }

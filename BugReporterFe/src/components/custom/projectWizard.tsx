@@ -16,9 +16,10 @@ import { ProjectSchema } from "@/schema/project.schema";
 
 interface IProjectWizard {
   onSubmit: (proj: ProjectFormData) => void
+  onCancel: () => void
 }
 
-export default function ProjectWizard({ onSubmit } : IProjectWizard) {
+export default function ProjectWizard({ onSubmit, onCancel } : IProjectWizard) {
   
   const { register, control, handleSubmit, reset, formState: { errors, isSubmitting } }  = useForm<ProjectFormData>({
     resolver: zodResolver(ProjectSchema),
@@ -41,6 +42,7 @@ export default function ProjectWizard({ onSubmit } : IProjectWizard) {
           <CardHeader>
             <div className="flex flex-row justify-between items-end">
               <CardTitle>Project Details</CardTitle>
+              <Button onClick={onCancel} className={"aspect-square"} variant="destructive">X</Button>
             </div>
           </CardHeader>
           <CardContent className="my-5">
