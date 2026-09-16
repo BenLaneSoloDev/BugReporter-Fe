@@ -12,10 +12,11 @@ import Status from "./status.tsx"
 import { BugGetData } from "@/schema/bug.schema.ts"
 
 interface IBug {
-  details: BugGetData
+  details: BugGetData,
+  onDelete: () => void
 }
 
-export default function Bug({ details } : IBug) {
+export default function Bug({ details, onDelete } : IBug) {
   return (
     <div className="mx-auto w-full border-cc-green-2 border rounded-2xl">
       <CardContent>
@@ -48,7 +49,7 @@ export default function Bug({ details } : IBug) {
                 ))}                
               </ol>
             </div>
-            <Button size="xs" className={`bg-cc-red hover:bg-cc-red/80 ml-auto`}>Delete Bug</Button>
+            <Button size="xs" onClick={onDelete} className={`bg-cc-red hover:bg-cc-red/80 ml-auto`}>Delete Bug</Button>
           </CollapsibleContent>
         </Collapsible>
       </CardContent>
