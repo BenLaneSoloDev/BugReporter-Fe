@@ -16,6 +16,9 @@ const createBug = async (bug: BugPostData) => {
     body: JSON.stringify(bugBody)
   });
 
+  console.log(JSON.stringify(bugBody));
+  console.log(response);
+
   if(!response.ok) {
     throw new Error("Network response was not ok")
   }

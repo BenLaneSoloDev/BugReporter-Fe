@@ -22,7 +22,7 @@ export default function Bug({ details } : IBug) {
         <Collapsible className="rounded-2xl data-open:bg-muted">
           <CollapsibleTrigger render={<Button variant="ghost" className="w-full rounded-2xl uppercase p-4">
             {details.title}
-            <div className="ml-auto"><Status /></div>
+            <div className="ml-auto"><Status status={details.severity} /></div>
             <ChevronDownIcon className="group-data-panel-open/button:rotate-180" /></Button>} />
           <CollapsibleContent className="flex flex-col items-start gap-2 p-2.5 pt-0 text-sm font-light">
             <div className="flex flex-row gap-2">

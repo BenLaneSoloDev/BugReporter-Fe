@@ -37,7 +37,7 @@ import { ProjectImportData } from "@/schema/project.schema";
       defaultValues: {
         title: "",
         developmentArea: "",
-        severity: "low",
+        severity: "normal",
         environmentsUsed: [],
         stepsToReproduce: [],
         expectedResult: "",
