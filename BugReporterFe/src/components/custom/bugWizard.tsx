@@ -17,7 +17,7 @@ import {
   useComboboxAnchor
 } from "@/components/ui/combobox"
 import ListInput from "./listInput";
-import { BugFormData, BugPageOneSchema, BugPageThreeSchema, BugPageTwoSchema, BugSchema } from "@/schema/bug.schema";
+import { BugFormData, BugPageOneSchema, BugPageThreeSchema, BugPageTwoSchema, BugSchema, severityOptions } from "@/schema/bug.schema";
 import { Control, Controller, FieldErrors, useForm, UseFormRegister, FormProvider, Form, useFormContext } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProjectImportData } from "@/schema/project.schema";
@@ -224,37 +224,39 @@ import { ca } from "zod/v4/locales";
 
   function PageTwo({ errors, control } : IPage) {
 
-    const severityOptions: string[] = ["low", "normal", "high", "extreme"];
+    const formatValue = (value: string): string => {
+      return value ? value.charAt(0).toUpperCase() + value.slice(1) : "";
+    }
 
     return (
       <div className="flex flex-col gap-5 my-5">
-        <Controller 
-          name="severity"
-          control={control}
-          render={({ field }) => (
-            <div>
-              <Combobox 
-                id="severity" 
-                items={severityOptions}
-                value={field.value ?? "low"}
-                onValueChange={field.onChange}
-              >
-                <ComboboxInput placeholder="Severity" onBlur={field.onBlur} />
-                <ComboboxContent>
-                  <ComboboxEmpty>No Severity found.</ComboboxEmpty>
-                  <ComboboxList>
-                    {(item) => (
-                      <ComboboxItem key={item} value={item}>
-                        {item}
-                      </ComboboxItem>
-                    )}
-                  </ComboboxList>
-                </ComboboxContent>
-              </Combobox>
-              {errors.severity && (<p className="bg-cc-red/20 p-2 rounded-2xl mt-2">{errors.severity.message}</p>)}
-            </div>
-          )}
-        />
+          <Controller 
+            name="severity"
+            control={control}
+            render={({ field }) => (
+              <div>
+                <Combobox 
+                  id="severity" 
+                  items={severityOptions}
+                  value={field.value ?? severityOptions[1]}
+                  onValueChange={field.onChange}
+                >
+                  <ComboboxInput placeholder="Severity" onBlur={field.onBlur} value={formatValue(field.value)}/>
+                  <ComboboxContent>
+                    <ComboboxEmpty>No Severity found.</ComboboxEmpty>
+                    <ComboboxList>
+                      {(item) => (
+                        <ComboboxItem key={item} value={item} className={"capitalize"}>
+                          {item}
+                        </ComboboxItem>
+                      )}
+                    </ComboboxList>
+                  </ComboboxContent>
+                </Combobox>
+                {errors.severity && (<p className="bg-cc-red/20 p-2 rounded-2xl mt-2">{errors.severity.message}</p>)}
+              </div>
+            )}
+          />
         <Controller 
           name="stepsToReproduce"
           control={control}

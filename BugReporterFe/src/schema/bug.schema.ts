@@ -30,6 +30,8 @@ export const BugSchema = z.object({
   })
 });
 
+export const severityOptions: string[] = ["low", "normal", "high", "extreme"];
+
 export type BugFormData = z.infer<typeof BugSchema>;
 
 const BugSchemaPost = BugSchema.extend({

@@ -59,8 +59,8 @@ export default function Bugs({ projectId, onUpdate, reload } : BugsProps) {
         { bugs.length > 0 && bugs.map((value, index) => (
           <Bug details={value} onDelete={() => onDelete(index)} key={`Bug:${value._id}:${index}`} />      
         ))}
-        { bugs.length > 0 && Array.from({ length: 5 - bugs.length }).map(() => (
-          <div className="w-full invisible"><BugSkeleton /></div>
+        { bugs.length > 0 && Array.from({ length: 5 - bugs.length }).map((_value, index) => (
+          <div className="w-full invisible" key={`div${index}`}><BugSkeleton key={`bugSkeleton${index}`} /></div>
         ))}
       </div>
       { bugs.length > 0 && (
