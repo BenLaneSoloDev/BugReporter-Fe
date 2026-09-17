@@ -16,9 +16,11 @@ import { useDeleteBug } from "@/hooks/useDeleteBug.hook.ts";
 
 interface BugsProps {
   projectId: string;
+  onUpdate: (status: boolean) => void
+  reload: boolean;
 }
 
-export default function Bugs({ projectId } : BugsProps) {
+export default function Bugs({ projectId, onUpdate, reload } : BugsProps) {
   
   const [limit, setLimit] = useState<string>("5");
   const [page, setPage] = useState<string>("1");
@@ -34,7 +36,11 @@ export default function Bugs({ projectId } : BugsProps) {
     deleteBug.mutate(bugs[bugIndex]._id);
   }
 
-  // TODO: When bug created, refetch GET request
+  useEffect(() => {
+    if(reload) {
+      refetch();
+    }
+  }, [reload])
 
   useEffect(() => {
     if(deleteBug.isSuccess) refetch();
@@ -43,6 +49,7 @@ export default function Bugs({ projectId } : BugsProps) {
   useEffect(() => {
     if (data) {
       setBugs(data.data); 
+      onUpdate(data.data.length > 0);
     }
   }, [data])
 

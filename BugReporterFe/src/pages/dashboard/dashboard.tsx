@@ -1,5 +1,5 @@
 import Project from "@/components/custom/project";
-import ProjectEmpty from "@/components/custom/projectEmpty";
+import CreateEmpty from "@/components/custom/createEmpty";
 import ProjectWizard from "@/components/custom/projectWizard";
 import { Button } from "@/components/ui/button";
 import { Toaster, toast } from "@/components/ui/toast";
@@ -37,12 +37,16 @@ export default function Dashboard() {
     createProject.mutate(project);
   }
 
+  function successToast(title: string) {
+    toast.add({
+      type: "Success",
+      title: `${title} Created`
+    })
+  }
+
   useEffect(() => {
     if (createProject.isSuccess) {
-      toast.add({
-        type: "Success",
-        title: "Project Created"
-      })
+      successToast("Project");
       refetch();
     }
   }, [createProject.isSuccess])
@@ -68,7 +72,7 @@ export default function Dashboard() {
           <div>
             {
               !inCreation ? (
-                <ProjectEmpty onCreate={() => setInCreation(true)}/>
+                <CreateEmpty type="project" onCreate={() => setInCreation(true)}/>
               )
               :
               (
@@ -86,7 +90,7 @@ export default function Dashboard() {
             <div className="flex flex-col gap-1 mb-4">
               {
                 projects.map((value, index) => (
-                  <Project details={value} onDelete={() => onDelete(index)} key={`${value.title}-${index}`} /> // Make this Project ID from Fetch
+                  <Project details={value} onDelete={() => onDelete(index)} onBugCreate={() => successToast("Bug")} key={`${value.title}-${index}`} /> // Make this Project ID from Fetch
                 ))
               }
             </div>

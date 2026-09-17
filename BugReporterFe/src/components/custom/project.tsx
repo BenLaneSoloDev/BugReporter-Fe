@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/collapsible"
 import { ChevronDownIcon } from "lucide-react"
 import ConfirmButton from "./confirmButton";
+import CreateEmpty from "./createEmpty";
 
 import BugWizard from "@/components/custom/bugWizard";
 import Bugs from "./bugs";
@@ -18,14 +19,17 @@ import { useState } from "react";
 interface IProject {
   details: ProjectImportData,
   onDelete: () => void
+  onBugCreate: () => void
 }
 
-export default function Project({ details, onDelete } : IProject) {
+export default function Project({ details, onDelete, onBugCreate } : IProject) {
   
   const [inCreation, setInCreation] = useState<boolean>(false);
+  const [hasBugs, setHasBugs] = useState<boolean>(false);
   const createBug = useCreateBug();
 
   const onCreate = async (bug: BugFormData) => {
+      onBugCreate();  
       setInCreation(false);
       createBug.mutate({...bug, project: details["_id"]});
     }
@@ -46,13 +50,14 @@ export default function Project({ details, onDelete } : IProject) {
                   </div>
                 )
                 :
-                ( 
-                  <>
-                    <Button onClick={() => setInCreation(true)} className={`aspect-square uppercase self-center my-2`}>Add Bug</Button>
-                    <Bugs projectId={details["_id"]}/>
-                    <div className="self-end"><ConfirmButton type="project" onConfirm={onDelete}/></div>
-                  </>
-                )
+                (
+                    <>
+                      { hasBugs && <Button onClick={() => setInCreation(true)} className={`aspect-square uppercase self-center my-2`}>Add Bug</Button>}
+                      { !hasBugs && <CreateEmpty type="bug" onCreate={() => setInCreation(true)}/> }
+                      <Bugs projectId={details["_id"]} onUpdate={(status: boolean) => setHasBugs(status)} reload={!inCreation}/>
+                      { hasBugs && <div className="self-end"><ConfirmButton type="project" onConfirm={onDelete}/></div> }
+                    </>
+                )           
               }
             </div>
           </CollapsibleContent>
