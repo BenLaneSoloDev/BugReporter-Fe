@@ -1,4 +1,4 @@
-import Bug from "./bug.tsx"
+import Bug, { BugSkeleton } from "./bug.tsx"
 import {
   Pagination,
   PaginationContent,
@@ -58,6 +58,9 @@ export default function Bugs({ projectId, onUpdate, reload } : BugsProps) {
       <div className="flex flex-col gap-3 items-center mb-2">
         { bugs.length > 0 && bugs.map((value, index) => (
           <Bug details={value} onDelete={() => onDelete(index)} key={`Bug:${value._id}:${index}`} />      
+        ))}
+        { bugs.length > 0 && Array.from({ length: 5 - bugs.length }).map(() => (
+          <div className="w-full invisible"><BugSkeleton /></div>
         ))}
       </div>
       { bugs.length > 0 && (

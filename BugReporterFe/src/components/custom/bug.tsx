@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/collapsible"
 import { Badge } from "../ui/badge"
 import ConfirmButton from "./confirmButton.tsx"
+import { Skeleton } from "../ui/skeleton.tsx"
 
 import Status from "./status.tsx"
 import { BugGetData } from "@/schema/bug.schema.ts"
@@ -52,6 +53,21 @@ export default function Bug({ details, onDelete } : IBug) {
             </div>
             <div className="self-end"><ConfirmButton type="bug" size="xs" onConfirm={onDelete}/></div>
           </CollapsibleContent>
+        </Collapsible>
+      </CardContent>
+    </div>
+  )
+}
+
+export function BugSkeleton() {
+  return (
+    <div className="mx-auto w-full border-cc-green-2 border rounded-2xl">
+      <CardContent>
+        <Collapsible className="rounded-2xl data-open:bg-muted">
+          <CollapsibleTrigger render={<Button variant="ghost" className="w-full rounded-2xl uppercase p-4">
+            <Skeleton className="h-4 w-[90%]" />
+            <div className="ml-auto"></div>
+            <Skeleton className="h-4 w-[10%]" /></Button>} />
         </Collapsible>
       </CardContent>
     </div>
