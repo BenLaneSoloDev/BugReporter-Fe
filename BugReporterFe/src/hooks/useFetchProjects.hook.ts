@@ -1,4 +1,4 @@
-import { QueryFunction, QueryFunctionContext, useQuery } from "@tanstack/react-query"
+import { QueryFunction, keepPreviousData, QueryFunctionContext, useQuery } from "@tanstack/react-query"
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 
@@ -35,7 +35,8 @@ const fetchProjects = async ({ queryKey }: QueryFunctionContext<ProjectsQueryKey
 export function useFetchProjects(params: IFetchProjectParams) {
   const query = useQuery({
     queryKey: ["fetchProjects", params],
-    queryFn: fetchProjects
+    queryFn: fetchProjects,
+    placeholderData: keepPreviousData
   })
 
   useEffect(() => {

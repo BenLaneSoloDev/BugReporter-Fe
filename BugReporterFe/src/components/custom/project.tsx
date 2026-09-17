@@ -15,6 +15,8 @@ import { ProjectImportData } from "@/schema/project.schema";
 import { BugFormData } from "@/schema/bug.schema";
 import { useCreateBug } from "@/hooks/useCreateBug.hook";
 import { useState } from "react";
+import { Skeleton } from "../ui/skeleton";
+import { BugsSkeleton } from "./bug";
 
 interface IProject {
   details: ProjectImportData,
@@ -25,15 +27,16 @@ interface IProject {
 export default function Project({ details, onDelete, onBugCreate } : IProject) {
   
   const [inCreation, setInCreation] = useState<boolean>(false);
-  const [hasBugs, setHasBugs] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [bugTotal, setBugTotal] = useState<number>(-1);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const createBug = useCreateBug();
 
   const onCreate = async (bug: BugFormData) => {
-      onBugCreate();  
-      setInCreation(false);
-      createBug.mutate({...bug, project: details["_id"]});
-    }
+    onBugCreate();  
+    setInCreation(false);
+    createBug.mutate({...bug, project: details["_id"]});
+  }
 
   return(
     <div>
@@ -67,10 +70,11 @@ export default function Project({ details, onDelete, onBugCreate } : IProject) {
                 :
                 (
                   <>
-                    { hasBugs && <Button onClick={() => setInCreation(true)} className={`aspect-square uppercase self-center my-2`}>Add Bug</Button>}
-                    { !hasBugs && <CreateEmpty type="bug" onCreate={() => setInCreation(true)}/> }
-                    <Bugs projectId={details["_id"]} onUpdate={(status: boolean) => setHasBugs(status)} reload={!inCreation}/>
-                    { hasBugs && <div className="self-end"><ConfirmButton type="project" onConfirm={onDelete}/></div> }
+                    { (bugTotal > 0) && <Button onClick={() => setInCreation(true)} className={`aspect-square uppercase self-center my-2`}>Add Bug</Button>}
+                    { (bugTotal === 0) && <CreateEmpty type="bug" onCreate={() => setInCreation(true)}/> }
+                    { bugTotal < 0 && <BugsSkeleton /> }
+                    <Bugs projectId={details["_id"]} onUpdate={(bugAmount: number) => setBugTotal(bugAmount)} reload={!inCreation}/>
+                    <div className="self-end"><ConfirmButton type="project" onConfirm={onDelete}/></div>
                   </>
                 )           
               }
@@ -84,11 +88,13 @@ export default function Project({ details, onDelete, onBugCreate } : IProject) {
 
 export function ProjectSkeleton() {
   return (
-    <div>
-      <CardContent className={`p-2`}>
-        <Collapsible className={`rounded-3xl drop-shadow-subtle data-open:bg-gray-200 `}>
-          <CollapsibleTrigger render={<Button variant="ghost" className={`flex flex-col w-full h-auto py-3 aria rounded-3xl uppercase bg-gray-100 aria-expanded:bg-gray-200 hover:bg-gray-200`}>
-            
+    <div className="w-full">
+      <CardContent className={`p-2 w-full`}>
+        <Collapsible className={`rounded-3xl drop-shadow-subtle `}>
+          <CollapsibleTrigger render={<Button variant="ghost" className={`w-full h-auto py-3 rounded-3xl uppercase bg-gray-100 hover:bg-gray-100`}>
+            <Skeleton className="h-4 w-[55%]" />
+            <div className="ml-auto"></div>
+            <Skeleton className="h-4 w-[5%]" />
           </Button>} /> 
         </Collapsible>
       </CardContent>
@@ -98,8 +104,11 @@ export function ProjectSkeleton() {
 
 export function ProjectsSkeleton() {
   return (
-    <div>
-      
+    <div className="flex flex-col items-center gap-2">
+      <Skeleton className="h-6 w-[20%]"/>
+      <ProjectSkeleton />
+      <ProjectSkeleton />
+      <ProjectSkeleton />
     </div>
   )
 }

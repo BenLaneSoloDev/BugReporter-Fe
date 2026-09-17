@@ -1,4 +1,4 @@
-import { QueryFunction, QueryFunctionContext, useQuery } from "@tanstack/react-query"
+import { QueryFunction, keepPreviousData, QueryFunctionContext, useQuery } from "@tanstack/react-query"
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 
@@ -36,7 +36,8 @@ const fetchBugs = async ({ queryKey }: QueryFunctionContext<BugsQueryKey>) => {
 export function useFetchBugs(params: IFetchBugsParams) {
   const query = useQuery({
     queryKey: ["fetchBugs", params],
-    queryFn: fetchBugs
+    queryFn: fetchBugs,
+    placeholderData: keepPreviousData
   })
 
   useEffect(() => {

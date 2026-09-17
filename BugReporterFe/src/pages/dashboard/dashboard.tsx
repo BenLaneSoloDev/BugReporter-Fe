@@ -1,4 +1,4 @@
-import Project from "@/components/custom/project";
+import Project, { ProjectSkeleton, ProjectsSkeleton } from "@/components/custom/project";
 import CreateEmpty from "@/components/custom/createEmpty";
 import ProjectWizard from "@/components/custom/projectWizard";
 import { Button } from "@/components/ui/button";
@@ -15,14 +15,16 @@ export default function Dashboard() {
   
   const [limit, setLimit] = useState<string>("5");
   const [page, setPage] = useState<string>("1");
-  const {data, refetch} = useFetchProjects({limit, page});
+  const {data, isLoading, refetch} = useFetchProjects({limit, page});
 
   const createProject = useCreateProject();
   const deleteProject = useDeleteProject();
 
   const [projects, setProjects] = useState<ProjectImportData[]>([]);
+  const [dataFetched, setDataFetched] = useState<boolean>(false);
   const [inCreation, setInCreation] = useState<boolean>(false);
   
+
   const navigate = useNavigate();
 
   const onDelete = async (projectIndex: number) => {
@@ -57,6 +59,10 @@ export default function Dashboard() {
     }
   }, [data])
 
+  useEffect(() => {
+    if (!dataFetched && data) { setDataFetched(true) };
+  }, [projects])
+
   return (
     <div className="flex flex-col gap-20 p-10">
       <div className="flex flex-row">
@@ -68,43 +74,49 @@ export default function Dashboard() {
         }
       </div>
       {
-        projects.length === 0 ? (
-          <div>
-            {
-              !inCreation ? (
-                <CreateEmpty type="project" onCreate={() => setInCreation(true)}/>
-              )
-              :
-              (
-                <div className="flex flex-row justify-center">
-                  <ProjectWizard onCancel={() => setInCreation(false)} onSubmit={(proj) => onCreate(proj)} />
-                </div>
-              )
-            }
-          </div>
-        ) 
-        : // Above: No Projects | Below: Show Projects
+        data != null ? 
         (
-          <div className="my-auto">
-            <h2 className="uppercase text-2xl text-center mb-2">Projects</h2>
-            <div className="flex flex-col gap-1 mb-4">
+          (projects.length === 0 && dataFetched) ? (
+            <div>
               {
-                projects.map((value, index) => (
-                  <Project details={value} onDelete={() => onDelete(index)} onBugCreate={() => successToast("Bug")} key={`Project:${value._id}:${index}`} /> // Make this Project ID from Fetch
-                ))
+                inCreation ? (
+                  <div className="flex flex-row justify-center">
+                    <ProjectWizard onCancel={() => setInCreation(false)} onSubmit={(proj) => onCreate(proj)} />
+                  </div>
+                )
+                :
+                (
+                  <CreateEmpty type="project" onCreate={() => setInCreation(true)}/>
+                )
               }
             </div>
-            {
-              inCreation && 
-              (
-                <div className="flex flex-row justify-center">
-                  <ProjectWizard onCancel={() => setInCreation(false)} onSubmit={(proj) => onCreate(proj)} />
-                </div>
-              )
-            }
-          </div>
+          ) 
+          : // Above: No Projects | Below: Show Projects
+          (
+            <div className="my-auto">
+              <h2 className="uppercase text-2xl text-center mb-2">Projects</h2>
+              <div className="flex flex-col gap-1 mb-4">
+                {
+                  projects.map((value, index) => (
+                    <Project details={value} onDelete={() => onDelete(index)} onBugCreate={() => successToast("Bug")} key={`Project:${value._id}:${index}`} /> // Make this Project ID from Fetch
+                  ))
+                }
+              </div>
+              {
+                inCreation && 
+                (
+                  <div className="flex flex-row justify-center">
+                    <ProjectWizard onCancel={() => setInCreation(false)} onSubmit={(proj) => onCreate(proj)} />
+                  </div>
+                )
+              }
+            </div>
+          )
         )
-      }
+        :
+        (
+          <ProjectsSkeleton />
+        )}
       <Toaster />
     </div>
   );

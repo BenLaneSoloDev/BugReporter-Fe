@@ -73,3 +73,16 @@ export function BugSkeleton() {
     </div>
   )
 }
+
+export function BugsSkeleton() {
+  return (
+    <div className="flex flex-col justify-center items-center gap-3">
+      <Skeleton className="h-4 w-[12%] my-2"/>
+      <BugSkeleton />
+      <BugSkeleton />
+      <BugSkeleton />
+      <BugSkeleton />
+      <BugSkeleton />
+    </div>
+  )
+}
