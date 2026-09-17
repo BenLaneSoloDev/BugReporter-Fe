@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { MongoId } from "@/schema/project.schema";
 import Cookies from "js-cookie";
 
+
 const deleteBug = async (id: MongoId) => {
   
   const token = Cookies.get("token");
