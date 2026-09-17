@@ -23,7 +23,7 @@ export default function Bug({ details, onDelete } : IBug) {
     <div className="mx-auto w-full border-cc-green-2 border rounded-2xl">
       <CardContent>
         <Collapsible className="rounded-2xl data-open:bg-muted">
-          <CollapsibleTrigger render={<Button variant="ghost" className="w-full rounded-2xl uppercase p-4">
+          <CollapsibleTrigger render={<Button variant="ghost" className="w-full rounded-2xl uppercase p-4 hover:bg-muted">
             {details.title}
             <div className="ml-auto"><Status status={details.severity} /></div>
             <ChevronDownIcon className="group-data-panel-open/button:rotate-180" /></Button>} />
@@ -37,15 +37,15 @@ export default function Bug({ details, onDelete } : IBug) {
             </div>
             <div className="flex flex-col items-start gap-1">
               <h4 className="font-normal">Expected Behaviour</h4>
-              <div className="border border-cc-green-2 rounded-xl px-2 py-0.5 mx-2">{details.expectedResult}</div>
+              <div className="border-2 rounded-xl px-2 py-0.5 mx-2">{details.expectedResult}</div>
             </div>
             <div className="flex flex-col items-start gap-1">
               <h4 className="font-normal">Actual Behaviour</h4>
-              <div className="border border-cc-green-2 rounded-xl px-2 py-0.5 mx-2">{details.actualResult}</div>
+              <div className="border-2 rounded-xl px-2 py-0.5 mx-2">{details.actualResult}</div>
             </div>
             <div className="flex flex-col items-start gap-1">
               <h4 className="font-normal">Steps to Reproduce</h4>
-              <ol className="list-decimal list-inside border border-cc-green-2 rounded-xl px-2 py-0.5 mx-2">
+              <ol className="list-decimal list-inside border-2 rounded-xl px-2 py-0.5 mx-2">
                 { details.stepsToReproduce.map((value, index) => (
                   <li key={`bug${index}`}>{value}</li>
                 ))}                

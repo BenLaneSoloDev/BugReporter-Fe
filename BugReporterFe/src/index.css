@@ -87,6 +87,8 @@
 
     --drop-shadow-subtle: 1px 1px 1px rgba(1, 1, 1, 0.55);
 
+    --transition-property-border: border-color, border-width, border-style;
+
     --font-heading: var(--font-sans);
 
     --font-sans: 'Rubik', sans-serif;

@@ -86,7 +86,7 @@ export default function Dashboard() {
         : // Above: No Projects | Below: Show Projects
         (
           <div className="my-auto">
-            <h2 className="uppercase text-2xl text-center">Projects</h2>
+            <h2 className="uppercase text-2xl text-center mb-2">Projects</h2>
             <div className="flex flex-col gap-1 mb-4">
               {
                 projects.map((value, index) => (
