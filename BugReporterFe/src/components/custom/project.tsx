@@ -60,7 +60,7 @@ export default function Project({ details, onDelete, onBugCreate } : IProject) {
             <div className={`flex flex-col gap-2 p-2 ${isOpen && "border-t-2 border-cc-green-2"}`}>
               {
                 inCreation ? (
-                  <div className="self-center">
+                  <div className="self-center py-4">
                     <BugWizard project={details} onCancel={() => setInCreation(false)} onSubmit={(bug) => onCreate(bug)}/>
                   </div>
                 )
@@ -78,6 +78,28 @@ export default function Project({ details, onDelete, onBugCreate } : IProject) {
           </CollapsibleContent>
         </Collapsible>
       </CardContent>      
+    </div>
+  )
+}
+
+export function ProjectSkeleton() {
+  return (
+    <div>
+      <CardContent className={`p-2`}>
+        <Collapsible className={`rounded-3xl drop-shadow-subtle data-open:bg-gray-200 `}>
+          <CollapsibleTrigger render={<Button variant="ghost" className={`flex flex-col w-full h-auto py-3 aria rounded-3xl uppercase bg-gray-100 aria-expanded:bg-gray-200 hover:bg-gray-200`}>
+            
+          </Button>} /> 
+        </Collapsible>
+      </CardContent>
+    </div>
+  )
+}
+
+export function ProjectsSkeleton() {
+  return (
+    <div>
+      
     </div>
   )
 }
