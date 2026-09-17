@@ -90,7 +90,7 @@ export default function Dashboard() {
             <div className="flex flex-col gap-1 mb-4">
               {
                 projects.map((value, index) => (
-                  <Project details={value} onDelete={() => onDelete(index)} onBugCreate={() => successToast("Bug")} key={`${value.title}-${index}`} /> // Make this Project ID from Fetch
+                  <Project details={value} onDelete={() => onDelete(index)} onBugCreate={() => successToast("Bug")} key={`Project:${value._id}:${index}`} /> // Make this Project ID from Fetch
                 ))
               }
             </div>
