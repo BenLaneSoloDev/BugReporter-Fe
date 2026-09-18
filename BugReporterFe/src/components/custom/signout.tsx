@@ -1,19 +1,26 @@
 import { Button } from "../ui/button"
 import { useNavigate } from "react-router-dom"
-import Cookies from "js-cookie";
+import { useLogout } from "@/hooks/useLogout.hook";
+import { useEffect } from "react";
 
 export default function Signout() {
   
+  const { mutate, isSuccess, isPending } = useLogout();
   const navigate = useNavigate();
 
   function signOut(): void {
-    Cookies.remove("token")
-    navigate("/login");
+    mutate();
   }
+
+  useEffect(() => {
+    if (isSuccess) navigate("/login");
+  }, [isSuccess])
 
   return (
     <div>
-      <Button onClick={signOut} variant="destructive">Sign Out</Button>
+      <Button onClick={signOut} variant="destructive">
+        Sign Out
+      </Button>
     </div>
   )
 }
