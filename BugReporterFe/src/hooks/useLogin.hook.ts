@@ -23,7 +23,7 @@ export function useLogin() {
     mutationFn: loginUser,
     onSuccess: (response) => {
       console.log("User login successful", response)
-      Cookies.set("token", response.data.accessToken, { expires: 1 });
+      Cookies.set("token", response.data.accessToken, { expires: 1, sameSite: "lax", secure: true });
     },
     onError: (error) => {
       console.log("Error authenticating ->", error)

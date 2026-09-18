@@ -3,6 +3,7 @@ import CreateEmpty from "@/components/custom/createEmpty";
 import ProjectWizard from "@/components/custom/projectWizard";
 import { Button } from "@/components/ui/button";
 import { Toaster, toast } from "@/components/ui/toast";
+import Signout from "@/components/custom/signout";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -65,16 +66,19 @@ export default function Dashboard() {
   }, [projects])
 
   return (
-    <div className="flex flex-col gap-20 px-10 pt-10 h-dvh">
-      <div className="flex flex-row">
+    <div className="flex flex-col gap-10 px-10 pt-10 h-dvh">
+      <div className="flex flex-row justify-between">
         <a onClick={() => navigate("/")} className="uppercase font-bold border-b-2 self-start cursor-pointer hover:text-cc-green-3 transition-colors duration-200">Bug Reporter</a>
-        { projects.length > 0 && 
-          (
-            <Button type="button" onClick={() => setInCreation(true)} className={`ml-auto`}>Create Project</Button>
-          )
-        }
+        <div className="flex flex-col self-end gap-2">
+          { projects.length > 0 &&  
+            (
+              <Button type="button" onClick={() => setInCreation(true)} className={`ml-auto`}>Create Project</Button>
+            )
+          }
+          <div className="self-end"><Signout /></div>
+        </div>
       </div>
-      <div className="justify-start h-full my-5">
+      <div className="justify-start h-full my-0">
         {
         data != null ? 
         (

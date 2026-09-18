@@ -4,6 +4,7 @@ import dashboardImg from "./../../assets/dashboard-ss.png";
 
 import { useNavigate } from "react-router-dom";
 import Footer from "@/components/custom/footer";
+import Signout from "@/components/custom/signout";
 
 export default function Home() {
   
@@ -22,7 +23,12 @@ export default function Home() {
             <Button onClick={() => navigate("/signup")}>Signup</Button>
           </div>
         )}
-        { loggedIn && <Button onClick={() => navigate("/dashboard")}>Dashboard</Button> }
+        { loggedIn && (
+          <div className="flex flex-row gap-5">
+            <Button onClick={() => navigate("/dashboard")}>Dashboard</Button>
+            <Signout />
+          </div> 
+        )}
       </div>
       <div className="flex flex-row justify-center items-end">
         <Footer />
