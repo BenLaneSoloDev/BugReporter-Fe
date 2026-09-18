@@ -17,3 +17,4 @@ Bug Report Wizard frontend client repository.
 
 # Credits
 - Google Fonts - Rubik
+- Magnific (Flaticon) - https://www.flaticon.com/free-icon/spyware_4773554?term=bug&page=1&position=67&origin=search&related_id=4773554
