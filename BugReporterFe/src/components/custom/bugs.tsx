@@ -34,6 +34,7 @@ export default function Bugs({ projectId, onUpdate, reload } : BugsProps) {
     bugsCache.splice(bugIndex, 1);
     setBugs(bugsCache);
     deleteBug.mutate(bugs[bugIndex]._id);
+    if (parseInt(page) > 1 && bugs.length === 1) goToPage((parseInt(page) - 1).toString());
   }
 
   const goToPage = (page: string) => {

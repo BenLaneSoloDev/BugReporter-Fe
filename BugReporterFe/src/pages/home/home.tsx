@@ -3,6 +3,7 @@ import { Button } from "../../components/ui/button";
 import dashboardImg from "./../../assets/dashboard-ss.png";
 
 import { useNavigate } from "react-router-dom";
+import Footer from "@/components/custom/footer";
 
 export default function Home() {
   
@@ -10,8 +11,8 @@ export default function Home() {
   const loggedIn = isLoggedIn();
 
   return (
-    <div className="flex justify-center items-center h-dvh">
-      <div className="flex flex-col items-center gap-5">
+    <div className="flex flex-col h-dvh">
+      <div className="flex flex-col justify-center items-center h-full gap-5">
         <h1 className="font-bold text-5xl uppercase">Bug Reporter</h1>
         <p className="font-light text-2xl">A tool for tracking bugs within programming projects.</p>
         <img src={dashboardImg} className="w-[50%] border-y-2 py-5 border-cc-neutral"></img>
@@ -22,6 +23,9 @@ export default function Home() {
           </div>
         )}
         { loggedIn && <Button onClick={() => navigate("/dashboard")}>Dashboard</Button> }
+      </div>
+      <div className="flex flex-row justify-center items-end">
+        <Footer />
       </div>
     </div>
   );

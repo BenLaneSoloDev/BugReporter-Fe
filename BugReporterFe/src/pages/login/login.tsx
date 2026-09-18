@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import Footer from "@/components/custom/footer";
 
 import { isSession, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -52,8 +53,8 @@ export default function Login() {
 
   return (
     <div className="flex flex-col h-dvh items-center justify-center mx-5">
-      <a onClick={() => navigate("/")} className="uppercase font-bold border-b-2 mb-4 cursor-pointer hover:text-cc-green-3 transition-colors duration-200">Bug Reporter</a>
-      <div className="">
+      <div className="flex flex-col justify-center h-full">
+        <a onClick={() => navigate("/")} className="uppercase self-center font-bold border-b-2 mb-4 cursor-pointer hover:text-cc-green-3 transition-colors duration-200">Bug Reporter</a>
         <Card className="w-full min-w-md max-w-md">
           <form onSubmit={handleSubmit(onSubmit)}>
             <CardHeader>
@@ -96,6 +97,9 @@ export default function Login() {
           </form>
         </Card>
         <Toaster />
+      </div>
+      <div className="flex flex-col justify-center items-end">
+        <Footer />
       </div>
     </div>
   );

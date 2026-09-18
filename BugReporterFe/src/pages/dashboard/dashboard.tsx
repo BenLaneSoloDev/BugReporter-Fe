@@ -10,6 +10,7 @@ import { useFetchProjects } from "@/hooks/useFetchProjects.hook";
 import { useCreateProject } from "@/hooks/useCreateProject.hook";
 import { useDeleteProject } from "@/hooks/useDeleteProject.hook";
 import { ProjectFormData, ProjectImportData } from "@/schema/project.schema";
+import Footer from "@/components/custom/footer";
 
 export default function Dashboard() {
   
@@ -64,7 +65,7 @@ export default function Dashboard() {
   }, [projects])
 
   return (
-    <div className="flex flex-col gap-20 p-10">
+    <div className="flex flex-col gap-20 px-10 pt-10 h-dvh">
       <div className="flex flex-row">
         <a onClick={() => navigate("/")} className="uppercase font-bold border-b-2 self-start cursor-pointer hover:text-cc-green-3 transition-colors duration-200">Bug Reporter</a>
         { projects.length > 0 && 
@@ -73,7 +74,8 @@ export default function Dashboard() {
           )
         }
       </div>
-      {
+      <div className="justify-start h-full my-5">
+        {
         data != null ? 
         (
           (projects.length === 0 && dataFetched) ? (
@@ -95,21 +97,21 @@ export default function Dashboard() {
           (
             <div className="my-auto">
               <h2 className="uppercase text-2xl text-center mb-2">Projects</h2>
-              <div className="flex flex-col gap-1 mb-4">
-                {
-                  projects.map((value, index) => (
-                    <Project details={value} onDelete={() => onDelete(index)} onBugCreate={() => successToast("Bug")} key={`Project:${value._id}:${index}`} /> // Make this Project ID from Fetch
-                  ))
-                }
-              </div>
               {
                 inCreation && 
                 (
-                  <div className="flex flex-row justify-center">
+                  <div className="flex flex-row justify-center my-6">
                     <ProjectWizard onCancel={() => setInCreation(false)} onSubmit={(proj) => onCreate(proj)} />
                   </div>
                 )
               }
+              <div className="flex flex-col gap-1">
+                {
+                  projects.map((value, index) => (
+                    <Project details={value} onDelete={() => onDelete(index)} onBugCreate={() => {successToast("Bug"), refetch()}} key={`Project:${value._id}:${index}`} /> // Make this Project ID from Fetch
+                  ))
+                }
+              </div>
             </div>
           )
         )
@@ -117,6 +119,10 @@ export default function Dashboard() {
         (
           <ProjectsSkeleton />
         )}
+      </div>
+      <div className="flex flex-row justify-center items-end">
+        <Footer />
+      </div>
       <Toaster />
     </div>
   );

@@ -16,6 +16,7 @@ import { SignupSchema, SignupFormData } from "@/schema/signup.schema";
 import { useSignup } from "@/hooks/useSignup.hook";
 import { useEffect } from "react";
 import { Toaster, toast } from "@/components/ui/toast";
+import Footer from "@/components/custom/footer";
 
 function LoginRedirect() {
   return (
@@ -70,8 +71,8 @@ export default function Signup() {
 
   return (
     <div className="flex flex-col justify-center h-dvh items-center mx-5">
-      <a onClick={() => navigate("/")} className="uppercase font-bold border-b-2 mb-4 cursor-pointer hover:text-cc-green-3 transition-colors duration-200">Bug Reporter</a>
-      <div>
+      <div className="flex flex-col justify-center h-full">
+        <a onClick={() => navigate("/")} className="uppercase self-center font-bold border-b-2 mb-4 cursor-pointer hover:text-cc-green-3 transition-colors duration-200">Bug Reporter</a>
         <Card className="w-full min-w-md max-w-md">
           <form onSubmit={handleSubmit(onSubmit)}>
             <CardHeader>
@@ -133,6 +134,9 @@ export default function Signup() {
           </form>
         </Card>
         <Toaster />
+      </div>
+      <div className="flex flex-col justify-center items-end">
+        <Footer />
       </div>
     </div>
   );
