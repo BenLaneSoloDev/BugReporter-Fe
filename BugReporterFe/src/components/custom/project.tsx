@@ -5,7 +5,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
-import { ChevronDownIcon } from "lucide-react"
+import { ChevronDownIcon, Turntable } from "lucide-react"
 import ConfirmButton from "./confirmButton";
 import CreateEmpty from "./createEmpty";
 
@@ -43,19 +43,19 @@ export default function Project({ details, onDelete, onBugCreate } : IProject) {
       <CardContent className={`p-2`}>
         <Collapsible className={`rounded-3xl drop-shadow-subtle data-open:bg-gray-200 ${isOpen && "border-2 border-cc-green-2"}`} open={isOpen} onOpenChange={setIsOpen}>
           <CollapsibleTrigger render={<Button variant="ghost" className={`flex flex-col w-full h-auto py-3 aria rounded-3xl uppercase bg-gray-100 aria-expanded:bg-gray-200 hover:bg-gray-200`}>
-            <div className="flex flex-row w-full">
-              <span className="data-open:border-r-2 border-cc-red/60">{details.title}</span>
+            <div className="flex flex-row w-full justify-evenly min-w-0">
+              <span className={`data-open:border-r-2 border-cc-red/60 ${!isOpen ? "truncate" : "text-wrap text-left"}`}>{details.title}</span>
               { (!isOpen && details.description) && (
-                <div className="flex flex-row w-full mr-[40%] text-gray-600">
-                  <div className="mx-2">|</div>
+                <div className="flex flex-row flex-1 text-gray-600 overflow-hidden">
+                  <div className="mx-2 shrink-0">|</div>
                   <span className="line-clamp-1 truncate normal-case first-letter:capitalize">{details.description}</span>
                 </div>
               )}
-              <ChevronDownIcon className="group-data-panel-open/button:rotate-180 ml-auto" />
+              <ChevronDownIcon className="group-data-panel-open/button:rotate-180 ml-auto shrink-0" />
             </div>
             { (isOpen && details.description) && (
               <div className={`flex flex-row w-full`}>
-                <span className="normal-case font-normal first-letter:capitalize">{details.description}</span>
+                <p className="normal-case font-normal first-letter:capitalize whitespace-normal text-left">{details.description}</p>
               </div>
             )}
             </Button>} /> 

@@ -66,10 +66,10 @@ export default function Dashboard() {
   }, [projects])
 
   return (
-    <div className="flex flex-col gap-10 px-10 pt-10 h-dvh">
-      <div className="flex flex-row justify-between">
-        <a onClick={() => navigate("/")} className="uppercase font-bold border-b-2 self-start cursor-pointer hover:text-cc-green-3 transition-colors duration-200">Bug Reporter</a>
-        <div className="flex flex-col self-end gap-2">
+    <div className="flex flex-col gap-10 min-h-dvh">
+      <div className="flex flex-col sm:flex-row justify-between px-5 pt-5 sm:px-10 sm:pt-10">
+        <a onClick={() => navigate("/")} className="uppercase font-bold border-b-2 self-center sm:self-start cursor-pointer hover:text-cc-green-3 transition-colors duration-200">Bug Reporter</a>
+        <div className="flex flex-row sm:flex-col self-center sm:self-end mt-5 sm:mt-0 gap-2">
           { projects.length > 0 &&  
             (
               <Button type="button" onClick={() => setInCreation(true)} className={`ml-auto`}>Create Project</Button>
@@ -78,7 +78,7 @@ export default function Dashboard() {
           <div className="self-end"><Signout /></div>
         </div>
       </div>
-      <div className="justify-start h-full my-0">
+      <div className="justify-start flex-1 my-0 px-5 sm:px-10">
         {
         data != null ? 
         (
@@ -109,10 +109,12 @@ export default function Dashboard() {
                   </div>
                 )
               }
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col items-center gap-1">
                 {
                   projects.map((value, index) => (
-                    <Project details={value} onDelete={() => onDelete(index)} onBugCreate={() => {successToast("Bug"), refetch()}} key={`Project:${value._id}:${index}`} /> // Make this Project ID from Fetch
+                    <div className="min-w-0 w-full md:max-w-xl">
+                      <Project details={value} onDelete={() => onDelete(index)} onBugCreate={() => {successToast("Bug"), refetch()}} key={`Project:${value._id}:${index}`} />
+                    </div>
                   ))
                 }
               </div>
