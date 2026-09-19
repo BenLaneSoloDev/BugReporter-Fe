@@ -1,4 +1,4 @@
-import Project, { ProjectSkeleton, ProjectsSkeleton } from "@/components/custom/project";
+import Project, { ProjectsSkeleton } from "@/components/custom/project";
 import CreateEmpty from "@/components/custom/createEmpty";
 import ProjectWizard from "@/components/custom/projectWizard";
 import { Button } from "@/components/ui/button";
@@ -113,7 +113,7 @@ export default function Dashboard() {
                 {
                   projects.map((value, index) => (
                     <div className="min-w-0 w-full md:max-w-xl">
-                      <Project details={value} onDelete={() => onDelete(index)} onBugCreate={() => {successToast("Bug"), refetch()}} key={`Project:${value._id}:${index}`} />
+                      <Project details={value} onDelete={() => onDelete(index)} onBugCreate={() => {successToast("Bug"), refetch()}} key={value._id} />
                     </div>
                   ))
                 }

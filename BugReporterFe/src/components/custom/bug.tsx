@@ -67,30 +67,15 @@ export default function Bug({ details, onDelete } : IBug) {
   )
 }
 
-export function BugSkeleton() {
-  return (
-    <div className="mx-auto w-full border-cc-green-2 border rounded-2xl">
-      <CardContent>
-        <Collapsible className="rounded-2xl data-open:bg-muted">
-          <CollapsibleTrigger render={<Button variant="ghost" className="w-full rounded-2xl uppercase p-4">
-            <Skeleton className="h-4 w-[90%]" />
-            <div className="ml-auto"></div>
-            <Skeleton className="h-4 w-[10%]" /></Button>} />
-        </Collapsible>
-      </CardContent>
-    </div>
-  )
-}
-
 export function BugsSkeleton() {
   return (
-    <div className="flex flex-col justify-center items-center gap-3">
-      <Skeleton className="h-4 w-[12%] my-2"/>
-      <BugSkeleton />
-      <BugSkeleton />
-      <BugSkeleton />
-      <BugSkeleton />
-      <BugSkeleton />
+    <div className="flex flex-col justify-center items-center gap-3 animate-pulse">
+      <div className="h-7 w-[20%] bg-muted rounded-2xl" />
+      <div className="h-7 w-full bg-muted rounded-2xl" />
+      <div className="h-7 w-full bg-muted rounded-2xl" />
+      <div className="h-7 w-full bg-muted rounded-2xl" />
+      <div className="h-7 w-full bg-muted rounded-2xl" />
+      <div className="h-7 w-full bg-muted rounded-2xl" />
     </div>
   )
 }

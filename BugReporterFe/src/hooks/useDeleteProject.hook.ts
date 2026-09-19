@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { MongoId } from "@/schema/project.schema";
 import Cookies from "js-cookie";
 
@@ -22,10 +22,14 @@ const deleteProject = async (id: MongoId) => {
 }
 
 export function useDeleteProject() {
+
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: deleteProject,
     onSuccess: (response) => {
-      console.log("Project was successfully deleted", response)
+      console.log("Project was successfully deleted", response);
+      queryClient.invalidateQueries({ queryKey: ["fetchProjects"] });
     },
     onError: (error) => {
       console.log("Error deleting project ->", error)

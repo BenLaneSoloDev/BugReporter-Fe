@@ -1,4 +1,4 @@
-import Bug, { BugSkeleton, BugsSkeleton } from "./bug.tsx"
+import Bug, { BugsSkeleton } from "./bug.tsx"
 import {
   Pagination,
   PaginationContent,
@@ -9,65 +9,61 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useFetchBugs } from "@/hooks/useFetchBugs.hook.ts";
-import { BugGetData } from "@/schema/bug.schema.ts";
+import { BugFormData, BugGetData } from "@/schema/bug.schema.ts";
 import { useDeleteBug } from "@/hooks/useDeleteBug.hook.ts";
+import React from "react";
 
 interface BugsProps {
   projectId: string;
-  onUpdate: (bugAmount: number) => void
-  reload: boolean;
+  onUpdate: (bugAmount: number) => void;
 }
 
-export default function Bugs({ projectId, onUpdate, reload } : BugsProps) {
+function Bugs({ projectId, onUpdate } : BugsProps) {
   
   const [limit, setLimit] = useState<string>("5");
   const [page, setPage] = useState<string>("1");
-  const [bugs, setBugs] = useState<BugGetData[]>([]);
 
-  const {data, refetch} = useFetchBugs({limit, page, projectId});
-  const deleteBug = useDeleteBug();
+  const {data } = useFetchBugs({limit, page, projectId});
+  const { mutate: deleteBug }= useDeleteBug();
 
-  const onDelete = async (bugIndex: number) => {
-    const bugsCache = [...bugs];
-    bugsCache.splice(bugIndex, 1);
-    setBugs(bugsCache);
-    deleteBug.mutate(bugs[bugIndex]._id);
-    if (parseInt(page) > 1 && bugs.length === 1) goToPage((parseInt(page) - 1).toString());
-  }
+  const bugs: BugGetData[] = data?.data ?? [];
+  const meta = data?.pagination?.meta;
 
-  const goToPage = (page: string) => {
-    setBugs([]);
-    onUpdate(-1);
+  useEffect(() => {
+    if (data) 
+    {
+      onUpdate(bugs.length);
+    }
+  }, [data, onUpdate])
+
+  const goToPage = useCallback((page: string) => {
     setPage(page);
+  }, []);
+
+  const handleDelete = useCallback((bugIndex: number) => {  
+    deleteBug(bugs[bugIndex]._id, {
+      onSuccess: () => {
+        if (bugs.length === 1 && parseInt(page) > 1) {
+          goToPage((parseInt(page) - 1).toString());
+        }
+      }
+    });
+  }, [deleteBug, bugs.length, page, goToPage])
+
+  if (bugs.length < 0 || !data) {
+    return <BugsSkeleton />
   }
-
-  useEffect(() => {
-    if(reload) {
-      refetch();
-    }
-  }, [reload])
-
-  useEffect(() => {
-    if(deleteBug.isSuccess) refetch();
-  }, [deleteBug.isSuccess])
-
-  useEffect(() => {
-    if (data) {
-      setBugs(data.data); 
-      onUpdate(data.data.length);
-    }
-  }, [data])
 
   return (
     <div className="mb-2">
       <div className="flex flex-col gap-3 items-center">
         { (bugs.length > 0) && bugs.map((value, index) => (
-          <Bug details={value} onDelete={() => onDelete(index)} key={`Bug:${value._id}:${index}`} />      
+          <Bug details={value} onDelete={() => handleDelete(index)} key={value._id} />      
         ))}
         { (bugs.length > 0) && Array.from({ length: 5 - bugs.length }).map((_value, index) => (
-          <div className="w-full invisible" key={`div${index}`}><BugSkeleton key={`bugSkeleton${index}`} /></div>
+          <div className="w-full invisible" key={`div${index}`}><div className="h-7 w-[20%] bg-muted rounded-2xl" key={`bugBlank${index}`} /></div>
         ))}
       </div>
       { (bugs.length > 0) && (
@@ -108,3 +104,5 @@ export default function Bugs({ projectId, onUpdate, reload } : BugsProps) {
     </div>
   )
 }
+
+export default React.memo(Bugs);

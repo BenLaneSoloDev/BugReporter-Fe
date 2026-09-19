@@ -13,13 +13,15 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 
+import React from "react"
+
 interface IConfirmButton {
   type: "bug" | "project";
   size?: "sm" | "xs"
   onConfirm?  : () => void;
 }
 
-export default function ConfirmButton({ type, size = "sm", onConfirm } : IConfirmButton) {
+function ConfirmButton({ type, size = "sm", onConfirm } : IConfirmButton) {
   return (
     <AlertDialog>
       <AlertDialogTrigger
@@ -43,3 +45,5 @@ export default function ConfirmButton({ type, size = "sm", onConfirm } : IConfir
     </AlertDialog>
   )
 }
+
+export default React.memo(ConfirmButton);

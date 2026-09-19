@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { MongoId } from "@/schema/project.schema";
 import Cookies from "js-cookie";
-
+import { useQueryClient } from "@tanstack/react-query";
 
 const deleteBug = async (id: MongoId) => {
   
@@ -23,10 +23,14 @@ const deleteBug = async (id: MongoId) => {
 }
 
 export function useDeleteBug() {
+
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: deleteBug,
     onSuccess: (response) => {
-      console.log("Bug was successfully deleted", response)
+      console.log("Bug was successfully deleted", response);
+      queryClient.invalidateQueries({ queryKey: ["fetchBugs"] });
     },
     onError: (error) => {
       console.log("Error deleting bug ->", error)

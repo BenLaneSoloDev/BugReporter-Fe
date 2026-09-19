@@ -14,9 +14,8 @@ import Bugs from "./bugs";
 import { ProjectImportData } from "@/schema/project.schema";
 import { BugFormData } from "@/schema/bug.schema";
 import { useCreateBug } from "@/hooks/useCreateBug.hook";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Skeleton } from "../ui/skeleton";
-import { BugsSkeleton } from "./bug";
 
 interface IProject {
   details: ProjectImportData,
@@ -29,14 +28,19 @@ export default function Project({ details, onDelete, onBugCreate } : IProject) {
   const [inCreation, setInCreation] = useState<boolean>(false);
   const [bugTotal, setBugTotal] = useState<number>(-1);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const createBug = useCreateBug();
+  const { mutate: createBugMutate } = useCreateBug();
 
-  const onCreate = async (bug: BugFormData) => {
+  // Setup Static Callbacks
+  const handleStartCreate = useCallback(() => setInCreation(true), []);
+  const handleCancelCreate = useCallback(() => setInCreation(false), []);
+  const handleBugTotal = useCallback((bugAmount: number) => { setBugTotal(bugAmount)}, [])
+
+  // Setup Dynamic Callbacks
+  const onCreate = useCallback(async (bug: BugFormData) => {
     onBugCreate();  
     setInCreation(false);
-    createBug.mutate({...bug, project: details["_id"]});
-  }
+    createBugMutate({...bug, project: details["_id"]});
+  }, [onBugCreate, createBugMutate, details])
 
   return(
     <div>
@@ -60,25 +64,26 @@ export default function Project({ details, onDelete, onBugCreate } : IProject) {
             )}
             </Button>} /> 
           <CollapsibleContent className="justify-center rounded-3xl">
-            <div className={`flex flex-col gap-2 p-2 ${isOpen && "border-t-2 border-cc-green-2"}`}>
-              {
-                inCreation ? (
-                  <div className="py-4">
-                    <BugWizard project={details} onCancel={() => setInCreation(false)} onSubmit={(bug) => onCreate(bug)}/>
-                  </div>
-                )
-                :
-                (
-                  <>
-                    { (bugTotal > 0) && <Button onClick={() => setInCreation(true)} className={`aspect-square uppercase self-center my-2`}>Add Bug</Button>}
-                    { (bugTotal === 0) && <CreateEmpty type="bug" onCreate={() => setInCreation(true)}/> }
-                    { bugTotal < 0 && <BugsSkeleton /> }
-                    <Bugs projectId={details["_id"]} onUpdate={(bugAmount: number) => setBugTotal(bugAmount)} reload={!inCreation}/>
-                    <div className="self-end"><ConfirmButton type="project" onConfirm={onDelete}/></div>
-                  </>
-                )           
-              }
-            </div>
+            { isOpen && (
+              <div className={`flex flex-col gap-2 p-2 ${isOpen && "border-t-2 border-cc-green-2"}`}>
+                {
+                  inCreation ? (
+                    <div className="py-4">
+                      <BugWizard project={details} onCancel={handleCancelCreate} onSubmit={onCreate}/>
+                    </div>
+                  )
+                  :
+                  (
+                    <>
+                      { (bugTotal > 0) && <Button onClick={handleStartCreate} className={`aspect-square uppercase self-center my-2`}>Add Bug</Button>}
+                      { (bugTotal === 0) && <CreateEmpty type="bug" onCreate={handleStartCreate}/> }
+                      <Bugs projectId={details["_id"]} onUpdate={handleBugTotal} />
+                      <div className="self-end"><ConfirmButton type="project" onConfirm={onDelete}/></div>
+                    </>
+                  )           
+                }
+              </div>
+            )}
           </CollapsibleContent>
         </Collapsible>
       </CardContent>      
@@ -86,29 +91,13 @@ export default function Project({ details, onDelete, onBugCreate } : IProject) {
   )
 }
 
-export function ProjectSkeleton() {
-  return (
-    <div className="w-full">
-      <CardContent className={`p-2 w-full`}>
-        <Collapsible className={`rounded-3xl drop-shadow-subtle `}>
-          <CollapsibleTrigger render={<Button variant="ghost" className={`w-full h-auto py-3 rounded-3xl uppercase bg-gray-100 hover:bg-gray-100`}>
-            <Skeleton className="h-4 w-[55%]" />
-            <div className="ml-auto"></div>
-            <Skeleton className="h-4 w-[5%]" />
-          </Button>} /> 
-        </Collapsible>
-      </CardContent>
-    </div>
-  )
-}
-
 export function ProjectsSkeleton() {
   return (
     <div className="flex flex-col items-center gap-2">
-      <Skeleton className="h-6 w-[20%]"/>
-      <ProjectSkeleton />
-      <ProjectSkeleton />
-      <ProjectSkeleton />
+      <div className="h-7 w-[20%] bg-muted rounded-2xl" />
+      <div className="h-7 w-full bg-muted rounded-2xl" />
+      <div className="h-7 w-full bg-muted rounded-2xl" />
+      <div className="h-7 w-full bg-muted rounded-2xl" />
     </div>
   )
 }
