@@ -71,9 +71,9 @@ export default function Signup() {
 
   return (
     <div className="flex flex-col justify-center h-dvh items-center mx-5">
-      <div className="flex flex-col justify-center h-full">
+      <div className="flex flex-col justify-center h-full w-full">
         <a onClick={() => navigate("/")} className="uppercase self-center font-bold border-b-2 mb-4 cursor-pointer hover:text-cc-green-3 transition-colors duration-200">Bug Reporter</a>
-        <Card className="w-full min-w-md max-w-md">
+        <Card className="w-full max-w-md self-center">
           <form onSubmit={handleSubmit(onSubmit)}>
             <CardHeader>
               <div className="flex flex-row justify-between items-end">
