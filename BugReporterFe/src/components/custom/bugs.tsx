@@ -2,7 +2,6 @@ import Bug, { BugsSkeleton } from "./bug.tsx"
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -11,7 +10,7 @@ import {
 
 import { useState, useEffect, useCallback } from "react";
 import { useFetchBugs } from "@/hooks/useFetchBugs.hook.ts";
-import { BugFormData, BugGetData } from "@/schema/bug.schema.ts";
+import { BugGetData } from "@/schema/bug.schema.ts";
 import { useDeleteBug } from "@/hooks/useDeleteBug.hook.ts";
 import React from "react";
 
@@ -22,7 +21,7 @@ interface BugsProps {
 
 function Bugs({ projectId, onUpdate } : BugsProps) {
   
-  const [limit, setLimit] = useState<string>("5");
+  const [limit, _setLimit] = useState<string>("5");
   const [page, setPage] = useState<string>("1");
 
   const {data } = useFetchBugs({limit, page, projectId});
@@ -68,10 +67,10 @@ function Bugs({ projectId, onUpdate } : BugsProps) {
       </div>
       { (bugs.length > 0) && (
         <div className="mt-3">
-          { (data && (data.pagination.meta.totalPages > 1)) && (
+          { (data && (meta.totalPages > 1)) && (
             <Pagination>
               <PaginationContent>
-                { data.pagination.meta.currentPage > 1 ? (
+                { meta.currentPage > 1 ? (
                   <PaginationItem>
                     <PaginationPrevious onClick={() => goToPage((parseInt(page) - 1).toString())} />
                   </PaginationItem>
@@ -85,7 +84,7 @@ function Bugs({ projectId, onUpdate } : BugsProps) {
                 <PaginationItem>
                   <PaginationLink isActive>{page}</PaginationLink>
                 </PaginationItem>
-                { data.pagination.meta.currentPage < data.pagination.meta.totalPages ? (
+                { meta.currentPage < meta.totalPages ? (
                   <PaginationItem>
                     <PaginationNext onClick={() => goToPage((parseInt(page) + 1).toString())} />
                   </PaginationItem>

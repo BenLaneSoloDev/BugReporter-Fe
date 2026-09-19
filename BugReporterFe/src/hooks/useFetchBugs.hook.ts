@@ -1,4 +1,4 @@
-import { QueryFunction, keepPreviousData, QueryFunctionContext, useQuery } from "@tanstack/react-query"
+import { keepPreviousData, QueryFunctionContext, useQuery } from "@tanstack/react-query"
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 

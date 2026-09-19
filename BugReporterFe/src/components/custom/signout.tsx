@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 export default function Signout() {
   
-  const { mutate, isSuccess, isPending } = useLogout();
+  const { mutate, isSuccess } = useLogout();
   const navigate = useNavigate();
 
   function signOut(): void {

@@ -18,10 +18,9 @@ import {
 } from "@/components/ui/combobox"
 import ListInput from "./listInput";
 import { BugFormData, BugPageOneSchema, BugPageThreeSchema, BugPageTwoSchema, BugSchema, severityOptions } from "@/schema/bug.schema";
-import { Control, Controller, FieldErrors, useForm, UseFormRegister, FormProvider, Form, useFormContext } from "react-hook-form";
+import { Control, Controller, FieldErrors, useForm, UseFormRegister, FormProvider, useFormContext } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProjectImportData } from "@/schema/project.schema";
-import { ca } from "zod/v4/locales";
 
   interface IBugWizard {
     project: ProjectImportData,

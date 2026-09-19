@@ -8,7 +8,7 @@ interface ITagInput {
   onChange: (tags: string[]) => void
 }
 
-export default function TagInput({ title, value, onChange } : ITagInput) {
+export default function TagInput({ title, onChange } : ITagInput) {
   
   const [tags, setTags] = useState<string[]>([]);
   const [input, setInput] = useState<string>("");

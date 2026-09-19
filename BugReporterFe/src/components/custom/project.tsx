@@ -5,7 +5,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
-import { ChevronDownIcon, Turntable } from "lucide-react"
+import { ChevronDownIcon } from "lucide-react"
 import ConfirmButton from "./confirmButton";
 import CreateEmpty from "./createEmpty";
 
@@ -15,7 +15,6 @@ import { ProjectImportData } from "@/schema/project.schema";
 import { BugFormData } from "@/schema/bug.schema";
 import { useCreateBug } from "@/hooks/useCreateBug.hook";
 import { useCallback, useState } from "react";
-import { Skeleton } from "../ui/skeleton";
 
 interface IProject {
   details: ProjectImportData,

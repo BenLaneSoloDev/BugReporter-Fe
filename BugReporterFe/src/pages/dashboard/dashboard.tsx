@@ -1,11 +1,10 @@
 import Project, { ProjectsSkeleton } from "@/components/custom/project";
 import CreateEmpty from "@/components/custom/createEmpty";
-import ProjectWizard from "@/components/custom/projectWizard";
 import { Button } from "@/components/ui/button";
 import { Toaster, toast } from "@/components/ui/toast";
 import Signout from "@/components/custom/signout";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState, lazy, startTransition } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFetchProjects } from "@/hooks/useFetchProjects.hook";
 import { useCreateProject } from "@/hooks/useCreateProject.hook";
@@ -13,53 +12,48 @@ import { useDeleteProject } from "@/hooks/useDeleteProject.hook";
 import { ProjectFormData, ProjectImportData } from "@/schema/project.schema";
 import Footer from "@/components/custom/footer";
 
+const ProjectWizard = lazy(() => import("@/components/custom/projectWizard"));
+
 export default function Dashboard() {
   
-  const [limit, setLimit] = useState<string>("5");
-  const [page, setPage] = useState<string>("1");
-  const {data, isLoading, refetch} = useFetchProjects({limit, page});
+  const [limit, _setLimit] = useState<string>("5");
+  const [page, _setPage] = useState<string>("1");
+  const {data, refetch} = useFetchProjects({limit, page});
 
   const createProject = useCreateProject();
   const deleteProject = useDeleteProject();
 
-  const [projects, setProjects] = useState<ProjectImportData[]>([]);
   const [dataFetched, setDataFetched] = useState<boolean>(false);
   const [inCreation, setInCreation] = useState<boolean>(false);
   
-
   const navigate = useNavigate();
 
-  const onDelete = async (projectIndex: number) => {
-    const projectsCache = [...projects];
-    projectsCache.splice(projectIndex, 1);
-    setProjects(projectsCache);
-    deleteProject.mutate(projects[projectIndex]._id);
-  }
-  
-  const onCreate = async (project: ProjectFormData) => {
-    setInCreation(false);
-    createProject.mutate(project);
-  }
+  const projects: ProjectImportData[] = data?.data ?? [];
 
-  function successToast(title: string) {
+  function successToast (title: string) {
     toast.add({
       type: "Success",
       title: `${title} Created`
     })
   }
 
-  useEffect(() => {
-    if (createProject.isSuccess) {
-      successToast("Project");
-      refetch();
-    }
-  }, [createProject.isSuccess])
+  const handleStartCreate = () => { startTransition(() => { setInCreation(true); })};
+  const handleEndCreate = useCallback(() => setInCreation(false), []);
+  const handleBugToast = useCallback(() => successToast("Bug"), []);
 
-  useEffect(() => {
-    if (data) {
-      setProjects(data.data); 
-    }
-  }, [data])
+  const handleDelete = useCallback(async (projectIndex: number) => {
+    deleteProject.mutate(projects[projectIndex]._id);
+  }, [projects.length, deleteProject])
+  
+  const handleCreate = useCallback(async (project: ProjectFormData) => {
+    setInCreation(false);
+    createProject.mutate(project, {
+      onSuccess: () => {
+        successToast("Project");
+        refetch();
+      }
+    });
+  }, [createProject])
 
   useEffect(() => {
     if (!dataFetched && data) { setDataFetched(true) };
@@ -72,7 +66,7 @@ export default function Dashboard() {
         <div className="flex flex-row sm:flex-col self-center sm:self-end mt-5 sm:mt-0 gap-2">
           { projects.length > 0 &&  
             (
-              <Button type="button" onClick={() => setInCreation(true)} className={`ml-auto`}>Create Project</Button>
+              <Button type="button" onClick={handleStartCreate} className={`ml-auto`}>Create Project</Button>
             )
           }
           <div className="self-end"><Signout /></div>
@@ -87,12 +81,12 @@ export default function Dashboard() {
               {
                 inCreation ? (
                   <div className="flex flex-row justify-center">
-                    <ProjectWizard onCancel={() => setInCreation(false)} onSubmit={(proj) => onCreate(proj)} />
+                    <ProjectWizard onCancel={handleEndCreate} onSubmit={handleCreate} />
                   </div>
                 )
                 :
                 (
-                  <CreateEmpty type="project" onCreate={() => setInCreation(true)}/>
+                  <CreateEmpty type="project" onCreate={handleStartCreate}/>
                 )
               }
             </div>
@@ -105,7 +99,7 @@ export default function Dashboard() {
                 inCreation && 
                 (
                   <div className="flex flex-row justify-center my-6">
-                    <ProjectWizard onCancel={() => setInCreation(false)} onSubmit={(proj) => onCreate(proj)} />
+                    <ProjectWizard onCancel={handleEndCreate} onSubmit={handleCreate} />
                   </div>
                 )
               }
@@ -113,7 +107,7 @@ export default function Dashboard() {
                 {
                   projects.map((value, index) => (
                     <div className="min-w-0 w-full md:max-w-xl">
-                      <Project details={value} onDelete={() => onDelete(index)} onBugCreate={() => {successToast("Bug"), refetch()}} key={value._id} />
+                      <Project details={value} onDelete={() => handleDelete(index)} onBugCreate={handleBugToast} key={value._id} />
                     </div>
                   ))
                 }

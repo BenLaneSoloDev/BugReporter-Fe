@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/collapsible"
 import { Badge } from "../ui/badge"
 import ConfirmButton from "./confirmButton.tsx"
-import { Skeleton } from "../ui/skeleton.tsx"
 
 import Status from "./status.tsx"
 import { BugGetData } from "@/schema/bug.schema.ts"

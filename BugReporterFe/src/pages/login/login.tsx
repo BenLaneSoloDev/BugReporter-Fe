@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Footer from "@/components/custom/footer";
 
-import { isSession, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema, LoginFormData } from "@/schema/login.schema";
@@ -23,7 +23,7 @@ export default function Login() {
   const { mutate, isSuccess, isError } = useLogin();
   let navigate = useNavigate();
 
-  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<LoginFormData>({
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginFormData>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
