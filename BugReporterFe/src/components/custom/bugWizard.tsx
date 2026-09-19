@@ -73,8 +73,8 @@ import { ca } from "zod/v4/locales";
     }
 
     return (
-      <div>
-        <Card className="w-full min-w-md max-w-md"> 
+      <div className="flex flex-col w-full">
+        <Card className="w-full max-w-md self-center"> 
           <FormProvider {...formMethods} >
             <form onSubmit={handleSubmit(submitFull)}>
               <CardHeader className="flex flex-row items-center">

@@ -36,8 +36,8 @@ export default function ProjectWizard({ onSubmit, onCancel } : IProjectWizard) {
   }
 
   return (
-    <div>
-      <Card className="w-full min-w-md max-w-md">
+    <div className="flex flex-col w-full">
+      <Card className="w-full max-w-md self-center">
         <form onSubmit={handleSubmit(submit)}>
           <CardHeader>
             <div className="flex flex-row justify-between items-end">
@@ -64,12 +64,12 @@ export default function ProjectWizard({ onSubmit, onCancel } : IProjectWizard) {
                   {...register("description")}
                 />
               </div>
-              <div className="flex flex-row gap-5">
+              <div className="flex flex-col sm:flex-row w-full gap-5">
                 <Controller 
                   name="developmentAreas"
                   control={control}
                   render={({ field, fieldState }) => (
-                    <div className="grid gap-2 flex-1 self-start">
+                    <div className="grid gap-2 flex-1 self-start w-full">
                       <TagInput 
                         title="Development Areas" 
                         value={field.value ?? []}
@@ -83,7 +83,7 @@ export default function ProjectWizard({ onSubmit, onCancel } : IProjectWizard) {
                   name="environments"
                   control={control}
                   render={({ field, fieldState }) => (
-                    <div className="grid gap-2 flex-1 self-start">
+                    <div className="grid gap-2 flex-1 self-start w-full">
                       <TagInput 
                         title="Environments" 
                         value={field.value ?? []}

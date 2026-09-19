@@ -25,7 +25,7 @@ export default function ConfirmButton({ type, size = "sm", onConfirm } : IConfir
       <AlertDialogTrigger
         render={<Button variant="default" size={size} className={"bg-cc-red hover:bg-cc-red/80 capitalize"}>Delete {type}</Button>}
       />
-      <AlertDialogContent size="sm">
+      <AlertDialogContent size="sm" className={"w-[90%]"}>
         <AlertDialogHeader>
           <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
             <Trash2Icon />

@@ -63,7 +63,7 @@ export default function Project({ details, onDelete, onBugCreate } : IProject) {
             <div className={`flex flex-col gap-2 p-2 ${isOpen && "border-t-2 border-cc-green-2"}`}>
               {
                 inCreation ? (
-                  <div className="self-center py-4">
+                  <div className="py-4">
                     <BugWizard project={details} onCancel={() => setInCreation(false)} onSubmit={(bug) => onCreate(bug)}/>
                   </div>
                 )
