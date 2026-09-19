@@ -1,6 +1,5 @@
 import isLoggedIn from "@/utility/isLoggedIn";
 import { Button } from "../../components/ui/button";
-import dashboardImg from "./../../assets/dashboard-ss.png";
 
 import { useNavigate } from "react-router-dom";
 import Footer from "@/components/custom/footer";
@@ -12,11 +11,14 @@ export default function Home() {
   const loggedIn = isLoggedIn();
 
   return (
-    <div className="flex flex-col h-dvh">
-      <div className="flex flex-col justify-center items-center h-full gap-5">
-        <h1 className="font-bold text-5xl uppercase">Bug Reporter</h1>
-        <p className="font-light text-2xl">A tool for tracking bugs within programming projects.</p>
-        <img src={dashboardImg} className="w-[50%] border-y-2 py-5 border-cc-neutral"></img>
+    <div className="flex flex-col min-h-dvh">
+      <div className="flex flex-col justify-center items-center flex-1 gap-3 md:gap-5">
+        <h1 className="font-bold text-3xl md:text-5xl uppercase mt-10">Bug Reporter</h1>
+        <p className="font-light max-w-[90%] text-center text-lg md:text-2xl">A tool for tracking bugs within programming projects.</p>
+        <picture className="w-[95%] sm:px-0 border-y-2 py-5 border-cc-neutral sm:w-[70%] md:w-[60%] lg:w-[50%] xl:w-[40%]">
+          <source media="(min-width: 640px)" srcSet="/dashboard-ss.webp"/>
+          <img src={"/dashboard-ss-m.webp"} loading="eager" fetchPriority="high"></img>
+        </picture>
         { !loggedIn && (
           <div className="flex flex-row gap-5">
             <Button onClick={() => navigate("/login")}>Login</Button>
