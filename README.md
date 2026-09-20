@@ -4,7 +4,7 @@ A dashboard website for managing bugs in programming projects. It allows users t
 
 📌 Note on Live Demo - The backend for this application is hosted on Render’s free tier, meaning the first request may take 30 to 50 seconds while the web service spins up. Subsequent requests will load normally. Thank you for your patience!
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Here-brightgreen?style=for-the-badge)](link)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Here-brightgreen?style=for-the-badge)](https://bug-reporter-six.vercel.app/)
 [![Tech Stack](https://img.shields.io/badge/Stack-TypeScript_|_React_|_Tailwind_CSS_|_TanStack_Query_|_Zod-blue?style=for-the-badge)](#tech-stack)
 
 ---
