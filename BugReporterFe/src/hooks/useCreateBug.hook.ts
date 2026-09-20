@@ -7,7 +7,7 @@ const createBug = async (bug: BugPostData) => {
   const token = Cookies.get("token");
   const { project, ...bugBody} = bug;
 
-  const response = await fetch(`${import.meta.env.VITE_API_URL}projects/${project}/bugs`, {
+  const response = await fetch(`${import.meta.env.BACKEND_URL}projects/${project}/bugs`, {
     method: "POST",
     headers: { 
       "Content-Type": "application/json",

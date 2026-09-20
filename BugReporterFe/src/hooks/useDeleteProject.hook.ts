@@ -6,7 +6,7 @@ const deleteProject = async (id: MongoId) => {
   
   const token = Cookies.get("token");
   
-  const response = await fetch(`${import.meta.env.VITE_API_URL}projects/${id}`, {
+  const response = await fetch(`${import.meta.env.BACKEND_URL}projects/${id}`, {
     method: "DELETE",
     headers: { 
       "Content-Type": "application/json",
