@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   
   // This will print directly inside Vercel's Build Logs during compilation
-  console.log('>>> VERCEL BUILD ENV CHECK:', env.VITE_API_KEY ? 'FOUND' : 'MISSING');
+  console.log('>>> VERCEL BUILD ENV CHECK:', env.VITE_API_KEY ? 'FOUND' : 'MISSING', `: ${env.VITE_API_KEY}`);
 
   return {
     plugins: [
