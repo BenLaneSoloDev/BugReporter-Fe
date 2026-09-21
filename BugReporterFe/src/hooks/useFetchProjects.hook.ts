@@ -13,7 +13,7 @@ const fetchProjects = async ({ queryKey }: QueryFunctionContext<ProjectsQueryKey
   const [_key, { limit = "5", page = "1" }] = queryKey;
   const token = Cookies.get("token");
 
-  const url = new URL(`${import.meta.env.BACKEND_URL}projects`);
+  const url = new URL(`${import.meta.env.VITE_API_URL}projects`);
   url.searchParams.append("limit", limit);
   url.searchParams.append("page", page);
 

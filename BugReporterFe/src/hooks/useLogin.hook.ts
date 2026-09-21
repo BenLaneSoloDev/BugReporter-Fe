@@ -3,7 +3,7 @@ import { LoginFormData } from "@/schema/login.schema.ts";
 import Cookies from "js-cookie";
 
 const loginUser = async (user: LoginFormData) => {
-  const response = await fetch(`${import.meta.env.BACKEND_URL}auth/login`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}auth/login`, {
     method: "POST",
     headers: { 
       "Content-Type": "application/json" 

@@ -5,7 +5,7 @@ const logoutUser = async () => {
   
   const token = Cookies.get("token");
 
-  const response = await fetch(`${import.meta.env.BACKEND_URL}auth/logout`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}auth/logout`, {
     method: "POST",
     headers: { 
       "Content-Type": "application/json",

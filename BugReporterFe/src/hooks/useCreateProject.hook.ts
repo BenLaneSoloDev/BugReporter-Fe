@@ -6,7 +6,7 @@ const createProject = async (project: ProjectFormData) => {
   
   const token = Cookies.get("token");
   
-  const response = await fetch(`${import.meta.env.BACKEND_URL}projects`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}projects`, {
     method: "POST",
     headers: { 
       "Content-Type": "application/json",

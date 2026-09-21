@@ -14,7 +14,7 @@ const fetchBugs = async ({ queryKey }: QueryFunctionContext<BugsQueryKey>) => {
   const [_key, { limit = "5", page = "1", projectId }] = queryKey;
   const token = Cookies.get("token");
 
-  const url = new URL(`${import.meta.env.BACKEND_URL}projects/${projectId}/bugs`);
+  const url = new URL(`${import.meta.env.VITE_API_URL}projects/${projectId}/bugs`);
   url.searchParams.append("limit", limit);
   url.searchParams.append("page", page);
 

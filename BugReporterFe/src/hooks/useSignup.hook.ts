@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { SignupFormData } from "@/schema/signup.schema";
 
 const createUser = async (user: SignupFormData) => {
-  const response = await fetch(`${import.meta.env.BACKEND_URL}auth/signup`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}auth/signup`, {
     method: "POST",
     headers: { 
       "Content-Type": "application/json" 

@@ -7,7 +7,7 @@ const deleteBug = async (id: MongoId) => {
   
   const token = Cookies.get("token");
   
-  const response = await fetch(`${import.meta.env.BACKEND_URL}bugs/${id}`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}bugs/${id}`, {
     method: "DELETE",
     headers: { 
       "Content-Type": "application/json",
