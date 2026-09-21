@@ -49,6 +49,7 @@
     "vite": "^8.2.0"
   },
   "allowScripts": {
-    "@vercel/node@13.0.1": true
+    "@vercel/node@13.0.1": true,
+    "esbuild": true
   }
 }
