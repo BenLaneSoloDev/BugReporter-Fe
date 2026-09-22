@@ -106,7 +106,7 @@ export default function Dashboard() {
               <div className="flex flex-col items-center gap-1">
                 {
                   projects.map((value, index) => (
-                    <div className="min-w-0 w-full md:max-w-xl">
+                    <div className="min-w-0 w-full md:max-w-2xl" key={`div${index}`}>
                       <Project details={value} onDelete={() => handleDelete(index)} onBugCreate={handleBugToast} key={value._id} />
                     </div>
                   ))

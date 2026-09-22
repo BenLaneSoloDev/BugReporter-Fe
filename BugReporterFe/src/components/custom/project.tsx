@@ -14,7 +14,8 @@ import Bugs from "./bugs";
 import { ProjectImportData } from "@/schema/project.schema";
 import { BugFormData } from "@/schema/bug.schema";
 import { useCreateBug } from "@/hooks/useCreateBug.hook";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface IProject {
   details: ProjectImportData,
@@ -27,7 +28,8 @@ export default function Project({ details, onDelete, onBugCreate } : IProject) {
   const [inCreation, setInCreation] = useState<boolean>(false);
   const [bugTotal, setBugTotal] = useState<number>(-1);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { mutate: createBugMutate } = useCreateBug();
+  const { mutate: createBugMutate, isSuccess } = useCreateBug();
+  const queryClient = useQueryClient();
 
   // Setup Static Callbacks
   const handleStartCreate = useCallback(() => setInCreation(true), []);
@@ -36,10 +38,15 @@ export default function Project({ details, onDelete, onBugCreate } : IProject) {
 
   // Setup Dynamic Callbacks
   const onCreate = useCallback(async (bug: BugFormData) => {
+    console.log("BUG CREATE");
     onBugCreate();  
     setInCreation(false);
     createBugMutate({...bug, project: details["_id"]});
   }, [onBugCreate, createBugMutate, details])
+
+  useEffect(() => {
+    if (isSuccess) { queryClient.invalidateQueries({ queryKey: ["fetchBugs"] }); }
+  }, [isSuccess]);
 
   return(
     <div>

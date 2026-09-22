@@ -67,6 +67,7 @@ import { ProjectImportData } from "@/schema/project.schema";
     }
 
     const submitFull = async (data: BugFormData) => {
+      console.log("Submit");
       onSubmit(data);
       reset();
     }
