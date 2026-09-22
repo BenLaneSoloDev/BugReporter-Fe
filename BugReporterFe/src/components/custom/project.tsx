@@ -38,7 +38,6 @@ export default function Project({ details, onDelete, onBugCreate } : IProject) {
 
   // Setup Dynamic Callbacks
   const onCreate = useCallback(async (bug: BugFormData) => {
-    console.log("BUG CREATE");
     onBugCreate();  
     setInCreation(false);
     createBugMutate({...bug, project: details["_id"]});
