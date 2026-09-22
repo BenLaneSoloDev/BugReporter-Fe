@@ -51,7 +51,6 @@ export default function Signup() {
 
   useEffect(() => {
     if(isSuccess) {
-      console.log("add Toast");
       toast.add({
         type: "success",
         title: "Account Created",

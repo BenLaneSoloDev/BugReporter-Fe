@@ -49,7 +49,7 @@ export default function TagInput({ title, onChange } : ITagInput) {
           onKeyDown={handleEnter}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setInput(e.target.value) }}
           placeholder={input ? input : `Add ${tags.length === 0 ? title : "item"}...` }
-          className="inline-block h-6.5 w-auto text-xs pl-2 min-w-10 field-sizing-content hover:underline hover:underline-offset-2 focus:outline-none"/>
+          className="inline-block h-6.5 w-auto text-base md:text-sm pl-2 min-w-10 field-sizing-content hover:underline hover:underline-offset-2 focus:outline-none"/>
       </li>
     </div>
   )
