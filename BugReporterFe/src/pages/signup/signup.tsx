@@ -21,7 +21,7 @@ import Footer from "@/components/custom/footer";
 function LoginRedirect() {
   return (
     <div className="flex flex-col gap-2">
-      <p>You can now login and start reporting bugs.</p>
+      <span>You can now login and start reporting bugs.</span>
       <Button size={"xs"} variant={"default"} className={"mr-auto"}>
         <Link to="/login">Login Here</Link>
       </Button>
@@ -51,6 +51,7 @@ export default function Signup() {
 
   useEffect(() => {
     if(isSuccess) {
+      console.log("add Toast");
       toast.add({
         type: "success",
         title: "Account Created",
@@ -90,6 +91,7 @@ export default function Signup() {
                     id="firstName"
                     type="text"
                     placeholder="First Name"
+                    autoComplete="new-firstName"
                     required
                     {...register("firstName")}
                   />
@@ -100,6 +102,7 @@ export default function Signup() {
                     id="lastName"
                     type="text"
                     placeholder="Last Name"
+                    autoComplete="new-lastName"
                     {...register("lastName")}
                   />
                   {errors.lastName && (<p className="bg-cc-red/20 p-2 rounded-2xl">{errors.lastName.message}</p>)}
@@ -109,6 +112,7 @@ export default function Signup() {
                     id="email"
                     type="email"
                     placeholder="Email"
+                    autoComplete="new-email"
                     required
                     {...register("email")}
                   />
@@ -119,6 +123,7 @@ export default function Signup() {
                     id="password" 
                     type="password" 
                     placeholder="Password" 
+                    autoComplete="new-password"
                     required 
                     {...register("password")} 
                   />

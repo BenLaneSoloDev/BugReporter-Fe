@@ -72,6 +72,7 @@ export default function Login() {
                     id="email"
                     type="email"
                     placeholder="Email"
+                    autoComplete="current-email"
                     required
                     {...register("email")}
                   />
@@ -81,7 +82,8 @@ export default function Login() {
                   <Input 
                     id="password" 
                     type="password" 
-                    placeholder="Password" 
+                    placeholder="Password"
+                    autoComplete="current-password" 
                     required 
                     {...register("password")}
                   />
